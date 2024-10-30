@@ -4,3 +4,8 @@ export type registerForm = {
   password: string;
   password_confirmation: string;
 };
+
+export type loginForm = {
+  email: string;
+  password: string;
+};
