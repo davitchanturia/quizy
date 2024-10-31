@@ -17,6 +17,10 @@
 <script setup lang="ts">
 import type { loginForm } from "~/utils/types/auth";
 
+// definePageMeta({
+//   middleware: ["redirect-if-auth"],
+// });
+
 const initialForm: loginForm = {
   email: "",
   password: "",

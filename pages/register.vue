@@ -23,6 +23,10 @@
 <script setup lang="ts">
 import type { registerForm } from "~/utils/types/auth";
 
+// definePageMeta({
+//   middleware: ["redirect-if-auth"],
+// });
+
 const initialForm: registerForm = {
   name: "",
   email: "",
