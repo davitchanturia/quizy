@@ -11,5 +11,10 @@ export default defineNuxtConfig({
         process.env.NUXT_BACKEND_BASE_URL || "http://localhost:8000",
     },
   },
-  ssr: false,
+  routeRules: {
+    "/": { ssr: true },
+    "/login": { ssr: false },
+    "/register": { ssr: false },
+  },
+  // ssr: false,
 });

@@ -5,7 +5,13 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   const authPages: string[] = ["/login", "/register"];
 
-  await userStore.fetchUser();
+  if (!userStore.isAuthenticated) {
+    try {
+      await userStore.fetchUser();
+    } catch (error) {
+      throw new Error("Error fetching user");
+    }
+  }
 
   if (!userStore.isAuthenticated && !authPages.includes(to.path)) {
     return navigateTo("/login");

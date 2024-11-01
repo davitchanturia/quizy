@@ -1,13 +1,15 @@
 <template>
   <div>
-    <div>auth status {{ userStore.isAuthenticated }}</div>
+    <ClientOnly>
+      <div>auth status {{ userStore.isAuthenticated }}</div>
+    </ClientOnly>
     <div>
-      <ul>
-        <li><NuxtLink to="/">home</NuxtLink></li>
-        <li><NuxtLink to="/about">about</NuxtLink></li>
-        <li><NuxtLink to="/login">login</NuxtLink></li>
-        <li><NuxtLink to="/register">register</NuxtLink></li>
-      </ul>
+      <div>
+        <div><NuxtLink to="/">home</NuxtLink></div>
+        <div><NuxtLink to="/about">about</NuxtLink></div>
+        <div><NuxtLink to="/login">login</NuxtLink></div>
+        <div><NuxtLink to="/register">register</NuxtLink></div>
+      </div>
     </div>
     <div>
       <slot />
