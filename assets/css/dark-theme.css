@@ -1,0 +1,31 @@
+/* assets/css/custom-theme.css */
+:root {
+  --primary-color: #4a90e2;
+  --primary-text-color: #ffffff;
+}
+
+.quizy-dark {
+  --primary-color: #7e57c2; /* Purple base color for dark mode */
+  --primary-text-color: #e0e0e0;
+  --background-color: #121212;
+  --card-background-color: #1e1e1e;
+  --text-color: #e0e0e0;
+  --button-bg: #7e57c2;
+  --button-text: #ffffff;
+}
+
+.quizy-dark .text-gray-900 {
+  color: var(--primary-text-color) !important;
+}
+
+.quizy-dark .bg-white {
+  background-color: var(--card-background-color) !important;
+}
+
+.quizy-dark .bg-gray-50 {
+  background-color: var(--background-color) !important;
+}
+
+.quizy-dark .text-gray-600 {
+  color: var(--text-color) !important;
+}

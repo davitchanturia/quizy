@@ -1,25 +1,39 @@
 <template>
-  <div>
-    <h1>login page</h1>
-    <form @submit.prevent="handleSubmit">
-      <input v-model="formData.email" type="email" placeholder="email" />
-      <input
-        v-model="formData.password"
-        type="password"
-        placeholder="password"
-      />
+  <NuxtLayout name="auth">
+    <template #header>Log In</template>
+    <template #description>Welcome back! Please Log in to continue.</template>
 
-      <button type="submit">register</button>
+    <!-- Your login form goes here -->
+    <form @submit.prevent="handleSubmit">
+      <FloatLabel variant="in">
+        <InputText
+          id="Email"
+          v-model="formData.email"
+          class="!bg-transparent w-full"
+        />
+        <label for="Email">Username</label>
+      </FloatLabel>
+
+      <FloatLabel variant="in" class="mt-4">
+        <InputText
+          id="Password"
+          v-model="formData.password"
+          class="!bg-transparent w-full"
+        />
+        <label for="Password">Password</label>
+      </FloatLabel>
+
+      <Button type="submit">login</Button>
     </form>
-  </div>
+
+    <template #footer>
+      Don't have an account? <a href="/register">Register</a>
+    </template>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 import type { loginForm } from "~/utils/types/auth";
-
-// definePageMeta({
-//   middleware: ["redirect-if-auth"],
-// });
 
 const initialForm: loginForm = {
   email: "",
