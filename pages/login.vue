@@ -3,13 +3,12 @@
     <template #header>Log In</template>
     <template #description>Welcome back! Please Log in to continue.</template>
 
-    <!-- Your login form goes here -->
     <form @submit.prevent="handleSubmit">
       <FloatLabel variant="in">
         <InputText
           id="Email"
           v-model="formData.email"
-          class="!bg-transparent w-full"
+          class="!bg-transparent w-full !text-gray-600"
         />
         <label for="Email">Username</label>
       </FloatLabel>
@@ -18,22 +17,30 @@
         <InputText
           id="Password"
           v-model="formData.password"
-          class="!bg-transparent w-full"
+          class="!bg-transparent w-full !text-gray-600"
+          type="password"
         />
         <label for="Password">Password</label>
       </FloatLabel>
 
-      <Button type="submit">login</Button>
+      <div class="flex justify-start items-center gap-4 mt-4">
+        <Button type="submit">Log in</Button>
+        <span class="text-sm text-gray-600">
+          Don't have an account? <NuxtLink href="/register">Register</NuxtLink>
+        </span>
+      </div>
     </form>
 
-    <template #footer>
-      Don't have an account? <a href="/register">Register</a>
-    </template>
+    <Toast />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 import type { loginForm } from "~/utils/types/auth";
+import Toast from "primevue/toast";
+import { useToast } from "primevue/usetoast";
+
+const toast = useToast();
 
 const initialForm: loginForm = {
   email: "",
@@ -48,8 +55,14 @@ const handleSubmit = async (): Promise<void> => {
     await loginUser(formData.value);
 
     await navigateTo("/");
-  } catch (error) {
+  } catch (error: unknown) {
     console.log(error);
+    toast.add({
+      severity: "error",
+      summary: "Error",
+      detail: error,
+      life: 3000,
+    });
   }
 };
 </script>

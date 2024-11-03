@@ -1,23 +1,55 @@
 <template>
-  <div>
-    <h1>register page</h1>
-    <form @submit.prevent="handleSubmit">
-      <input v-model="formData.name" type="text" placeholder="name" />
-      <input v-model="formData.email" type="email" placeholder="email" />
-      <input
-        v-model="formData.password"
-        type="password"
-        placeholder="password"
-      />
-      <input
-        v-model="formData.password_confirmation"
-        type="password"
-        placeholder="confirm password"
-      />
+  <NuxtLayout name="auth">
+    <template #header>Registration</template>
+    <template #description>Welcome!</template>
 
-      <button type="submit">register</button>
+    <form @submit.prevent="handleSubmit">
+      <FloatLabel variant="in">
+        <InputText
+          id="name"
+          v-model="formData.name"
+          class="!bg-transparent w-full !text-gray-600"
+        />
+        <label for="Password">Name</label>
+      </FloatLabel>
+
+      <FloatLabel variant="in" class="mt-4">
+        <InputText
+          id="Email"
+          v-model="formData.email"
+          class="!bg-transparent w-full !text-gray-600"
+        />
+        <label for="Email">Email</label>
+      </FloatLabel>
+
+      <FloatLabel variant="in" class="mt-4">
+        <InputText
+          id="Password"
+          v-model="formData.password"
+          class="!bg-transparent w-full !text-gray-600"
+          type="password"
+        />
+        <label for="Password">Password</label>
+      </FloatLabel>
+
+      <FloatLabel variant="in" class="mt-4">
+        <InputText
+          id="ConfirmPassword"
+          v-model="formData.password_confirmation"
+          class="!bg-transparent w-full !text-gray-600"
+          type="password"
+        />
+        <label for="ConfirmPassword">Confirm Password</label>
+      </FloatLabel>
+
+      <div class="flex justify-start items-center gap-4 mt-4">
+        <Button type="submit">Register</Button>
+        <span class="text-sm text-gray-600">
+          Already have an account? <NuxtLink href="/login">Log In</NuxtLink>
+        </span>
+      </div>
     </form>
-  </div>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">

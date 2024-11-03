@@ -19,46 +19,75 @@ export const useAuth = () => {
     });
   };
 
-  const authRequest = async (
-    endpoint: string,
-    formData?: registerForm | loginForm
-  ): Promise<any> => {
+  const registerUser = async (formData: registerForm): Promise<any> => {
     await csrfCookie();
-    return await $fetch(`${config.public.BACKEND_BASE_URL}${endpoint}`, {
-      method: "POST",
-      body: formData,
-      headers: getAuthHeaders(),
-      credentials: "include",
-    });
-  };
 
-  const registerUser = async (formData: registerForm): Promise<void> => {
     try {
-      await authRequest("/register", formData);
+      const response = await $fetch(
+        `${config.public.BACKEND_BASE_URL}/register`,
+        {
+          method: "POST",
+          body: formData,
+          headers: getAuthHeaders(),
+          credentials: "include",
+        }
+      );
+
       await userStore.fetchUser();
-      navigateTo("/");
-    } catch (error) {
-      throw new Error("register error");
+      await navigateTo("/");
+
+      return response;
+    } catch (error: any) {
+      const errorMessage = error.response?._data?.errors
+        ? error.response._data.errors
+        : error.response?._data?.message || "An unexpected error occurred";
+
+      throw errorMessage;
     }
   };
 
-  const loginUser = async (formData: loginForm): Promise<void> => {
+  const loginUser = async (formData: loginForm): Promise<any> => {
+    await csrfCookie();
+
     try {
-      await authRequest("/login", formData);
-      await userStore.fetchUser();
-      navigateTo("/");
-    } catch (error) {
-      throw new Error("login error");
+      const response = await $fetch(`${config.public.BACKEND_BASE_URL}/login`, {
+        method: "POST",
+        body: formData,
+        headers: getAuthHeaders(),
+        credentials: "include",
+      });
+
+      return response;
+    } catch (error: any) {
+      const errorMessage = error.response?._data?.errors
+        ? error.response._data.errors
+        : error.response?._data?.message || "An unexpected error occurred";
+
+      throw errorMessage;
     }
   };
 
-  const logoutUser = async (): Promise<void> => {
+  const logoutUser = async (): Promise<any> => {
     try {
-      await authRequest("/logout");
+      const response = await $fetch(
+        `${config.public.BACKEND_BASE_URL}/logout`,
+        {
+          method: "POST",
+          headers: getAuthHeaders(),
+          credentials: "include",
+        }
+      );
+
       userStore.logout();
-      navigateTo("/login");
-    } catch (error) {
-      throw new Error("logout error");
+      await navigateTo("/login");
+
+      return response;
+    } catch (error: any) {
+      const errorMessage = error.response?._data?.errors
+        ? error.response._data.errors
+        : error.response?._data?.message || "An unexpected error occurred";
+
+      throw errorMessage;
     }
   };
 

@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   primevue: {
     options: {
       theme: {
-        prefix: "Quizy",
+        prefix: "quizy",
         preset: Aura,
         darkModeSelector: ".quizy-dark",
       },

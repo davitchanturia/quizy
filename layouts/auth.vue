@@ -21,7 +21,7 @@
       </div>
 
       <!-- Footer Section -->
-      <div class="pt-4 text-center text-sm">
+      <div class="pt-4 text-center text-sm text-gray-600">
         <slot name="footer"></slot>
       </div>
     </div>
