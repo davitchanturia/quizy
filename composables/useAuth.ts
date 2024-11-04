@@ -59,9 +59,8 @@ export const useAuth = () => {
 
       return response;
     } catch (error: any) {
-      const errorMessage = error.response?._data?.errors
-        ? error.response._data.errors
-        : error.response?._data?.message || "An unexpected error occurred";
+      const errorMessage =
+        error.response?._data?.message || "An unexpected error occurred";
 
       throw errorMessage;
     }

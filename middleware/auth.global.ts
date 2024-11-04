@@ -3,7 +3,7 @@ import { useUserStore } from "~/store/useUserStore";
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const userStore = useUserStore();
 
-  const authPages: string[] = ["/login", "/register"];
+  const authPages: string[] = ["/login", "/register", "/play"];
 
   if (!userStore.isAuthenticated) {
     try {
