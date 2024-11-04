@@ -3,79 +3,138 @@
     <template #header>Registration</template>
     <template #description>Welcome!</template>
 
-    <form @submit.prevent="handleSubmit">
-      <FloatLabel variant="in">
+    <Form
+      v-slot="$form"
+      :resolver
+      :initial-values
+      :validate-on-blur="true"
+      @submit="submitHandler"
+    >
+      <FormField
+        v-slot="$field"
+        name="name"
+        initial-value=""
+        class="flex flex-col gap-1"
+      >
         <InputText
-          id="name"
-          v-model="formData.name"
+          type="text"
+          placeholder="Name"
           class="!bg-transparent w-full !text-gray-600"
         />
-        <label for="Password">Name</label>
-      </FloatLabel>
+        <Message
+          v-if="$field?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+          >{{ $field.error?.message }}</Message
+        >
+      </FormField>
 
-      <FloatLabel variant="in" class="mt-4">
+      <FormField
+        v-slot="$field"
+        name="email"
+        initial-value=""
+        class="flex flex-col gap-1 mt-4"
+      >
         <InputText
-          id="Email"
-          v-model="formData.email"
+          type="text"
+          placeholder="Email"
           class="!bg-transparent w-full !text-gray-600"
         />
-        <label for="Email">Email</label>
-      </FloatLabel>
+        <Message
+          v-if="$field?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+          >{{ $field.error?.message }}</Message
+        >
+      </FormField>
 
-      <FloatLabel variant="in" class="mt-4">
+      <FormField
+        v-slot="$field"
+        name="password"
+        initial-value=""
+        class="flex flex-col gap-1"
+      >
         <InputText
-          id="Password"
-          v-model="formData.password"
-          class="!bg-transparent w-full !text-gray-600"
           type="password"
+          placeholder="Password"
+          class="!bg-transparent w-full !text-gray-600 mt-4"
         />
-        <label for="Password">Password</label>
-      </FloatLabel>
+        <Message
+          v-if="$field?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+          >{{ $field.error?.message }}</Message
+        >
+      </FormField>
 
-      <FloatLabel variant="in" class="mt-4">
+      <FormField
+        v-slot="$field"
+        name="password_confirmation"
+        initial-value=""
+        class="flex flex-col gap-1"
+      >
         <InputText
-          id="ConfirmPassword"
-          v-model="formData.password_confirmation"
-          class="!bg-transparent w-full !text-gray-600"
           type="password"
+          placeholder="Confirm Password"
+          class="!bg-transparent w-full !text-gray-600 mt-4"
         />
-        <label for="ConfirmPassword">Confirm Password</label>
-      </FloatLabel>
+        <Message
+          v-if="$field?.invalid"
+          severity="error"
+          size="small"
+          variant="simple"
+          >{{ $field.error?.message }}</Message
+        >
+      </FormField>
 
       <div class="flex justify-start items-center gap-4 mt-4">
-        <Button type="submit">Register</Button>
+        <Button type="submit" :disabled="!$form.valid">Register</Button>
         <span class="text-sm text-gray-600">
-          Already have an account? <NuxtLink href="/login">Log In</NuxtLink>
+          Don't have an account? <NuxtLink href="/register">Register</NuxtLink>
         </span>
       </div>
-    </form>
+    </Form>
+
+    <Toast />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
+import { yupResolver } from "@primevue/forms/resolvers/yup";
 import type { registerForm } from "~/utils/types/auth";
+import { userRegisterSchema } from "~/utils/validationRules/auth";
+import Toast from "primevue/toast";
+import { useToast } from "primevue/usetoast";
 
-// definePageMeta({
-//   middleware: ["redirect-if-auth"],
-// });
+const toast = useToast();
 
-const initialForm: registerForm = {
+const resolver = yupResolver(userRegisterSchema);
+
+const initialValues: registerForm = {
   name: "",
   email: "",
   password: "",
   password_confirmation: "",
 };
 
-const formData = ref(initialForm);
 const { registerUser } = useAuth();
 
-const handleSubmit = async (): Promise<void> => {
+const submitHandler = async (event: any): Promise<void> => {
+  if (!event.valid) return;
+
   try {
-    await registerUser(formData.value);
+    await registerUser(event.values);
 
     await navigateTo("/");
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    toast.add({
+      severity: "error",
+      summary: error,
+      life: 3000,
+    });
   }
 };
 </script>

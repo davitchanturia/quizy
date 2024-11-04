@@ -13,3 +13,27 @@ export const userLoginSchema = Yup.object({
     .min(3, "Minimum 3 characters.")
     .required("Password is required."),
 });
+
+export const userRegisterSchema = Yup.object({
+  name: Yup.string()
+    .required("Username is required")
+    .min(3, "Username must be at least 3 characters")
+    .max(20, "Username must be less than 20 characters")
+    .matches(
+      /^[a-zA-Z0-9_-]+$/,
+      "Username can only contain letters, numbers, underscores and hyphens"
+    ),
+
+  email: Yup.string()
+    .required("Email is required")
+    .email("Must be a valid email address")
+    .trim(),
+
+  password: Yup.string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters"),
+
+  password_confirmation: Yup.string()
+    .required("Please confirm your password")
+    .oneOf([Yup.ref("password")], "Passwords must match"),
+});
