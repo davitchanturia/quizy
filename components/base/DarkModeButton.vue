@@ -1,5 +1,5 @@
 <template>
-  <Button @click="darkModeStore.toggleDarkMode()">
+  <Button :severity @click="darkModeStore.toggleDarkMode()">
     <i
       v-if="darkModeStore.darkModeEnabled"
       class="pi pi-moon"
@@ -11,6 +11,13 @@
 
 <script setup lang="ts">
 import { useDarkMode } from "~/store/useDarkMode";
+
+const { severity } = defineProps({
+  severity: {
+    type: String,
+    default: "secondary",
+  },
+});
 
 const darkModeStore = useDarkMode();
 </script>

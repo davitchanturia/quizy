@@ -1,12 +1,6 @@
 <template>
   <NuxtLayout name="main">
     <h1>home page</h1>
-    <ul>
-      <li><NuxtLink to="/login">login</NuxtLink></li>
-      <li><NuxtLink to="/register">register</NuxtLink></li>
-    </ul>
-
-    <!-- <div>{{ userStore.isAuthenticated || "no status" }}</div> -->
 
     <button @click="logout">logout</button>
   </NuxtLayout>

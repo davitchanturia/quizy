@@ -29,7 +29,7 @@ export default defineNuxtConfig({
       },
     },
   },
-  css: ["~/assets/css/dark-theme.css", "primeicons/primeicons.css"],
+  css: ["~/assets/css/custom-theme.css", "primeicons/primeicons.css"],
   routeRules: {
     "/": { ssr: true },
     "/login": { ssr: false },

@@ -1,0 +1,206 @@
+:root {
+  /* Light Theme - Matching PrimeVue.org */
+  /* Primary Colors - Blue from PrimeVue */
+  --primary-50: #f8faff;
+  --primary-100: #edf2ff;
+  --primary-200: #c9d7ff;
+  --primary-300: #a6bcff;
+  --primary-400: #8296ff;
+  --primary-500: #6366f1; /* Primary color from PrimeVue.org */
+  --primary-600: #5a5bd9;
+  --primary-700: #4f4fc0;
+  --primary-800: #4444a8;
+  --primary-900: #39398f;
+
+  /* Surface Colors - Light Theme */
+  --surface-0: #ffffff;
+  --surface-50: #f8f9fa;
+  --surface-100: #f3f4f6;
+  --surface-200: #e9ecef;
+  --surface-300: #dee2e6;
+  --surface-400: #ced4da;
+  --surface-500: #adb5bd;
+  --surface-600: #6c757d;
+  --surface-700: #495057;
+  --surface-800: #343a40;
+  --surface-900: #212529;
+
+  /* Text Colors - Light Theme */
+  --text-color: #495057; /* Main text color from PrimeVue.org */
+  --text-primary: var(--surface-900);
+  --text-secondary: var(--surface-600);
+  --text-disabled: var(--surface-400);
+
+  /* Background Colors - Light Theme */
+  --bg-primary: var(--surface-0);
+  --bg-secondary: var(--surface-100);
+  --bg-tertiary: var(--surface-200);
+
+  /* Special Colors */
+  --highlight-bg: #eef2ff; /* Light blue highlight from PrimeVue.org */
+  --highlight-text-color: var(--primary-500);
+
+  --p-menu-background: white;
+}
+
+.quizy-dark {
+  /* Dark Theme - Matching PrimeVue.org dark mode */
+  /* Primary Colors - Adjusted for dark theme */
+  --primary-50: #1c1d41;
+  --primary-100: #2e2f64;
+  --primary-200: #3f4187;
+  --primary-300: #5152aa;
+  --primary-400: #6364cd;
+  --primary-500: #6366f1; /* Same as light mode */
+  --primary-600: #7f81f3;
+  --primary-700: #9b9cf5;
+  --primary-800: #b7b8f7;
+  --primary-900: #d3d3f9;
+
+  /* Surface Colors - Dark Theme from PrimeVue Aura */
+  --surface-0: #040d19; /* Main dark background */
+  --surface-50: #0b1622;
+  --surface-100: #0f1c2b; /* Card background */
+  --surface-200: #1c2f44;
+  --surface-300: #23384d;
+  --surface-400: #2a4156;
+  --surface-500: #314a5f;
+  --surface-600: #385368;
+  --surface-700: #3f5c71;
+  --surface-800: #46657a;
+  --surface-900: #4d6e83;
+
+  /* Text Colors - Dark Theme */
+  --text-color: #495057; /* Main text color from PrimeVue.org */
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.8);
+  --text-disabled: rgba(255, 255, 255, 0.5);
+
+  /* Background Colors - Dark Theme */
+  --bg-primary: var(--surface-0);
+  --bg-secondary: var(--surface-100);
+  --bg-tertiary: var(--surface-200);
+
+  /* Special Colors */
+  --highlight-bg: #1c2f44; /* Dark mode highlight */
+  --highlight-text-color: var(--primary-500);
+}
+.p-menu {
+  background-color: var(--bg-primary) !important;
+}
+/* Utility Classes */
+.primary-bg {
+  background-color: var(--primary-500);
+}
+.secondary-bg {
+  background-color: var(--surface-100);
+}
+.surface-bg {
+  background-color: var(--surface-0);
+}
+.alt-surface-bg {
+  background-color: var(--surface-100);
+}
+
+.primary-text {
+  color: var(--text-primary);
+}
+.secondary-text {
+  color: var(--text-secondary);
+}
+.disabled-text {
+  color: var(--text-disabled);
+}
+.text-color {
+  color: var(--text-color);
+}
+
+.primary-border {
+  border-color: var(--primary-500);
+}
+.secondary-border {
+  border-color: var(--surface-200);
+}
+.surface-border {
+  border-color: var(--surface-200);
+}
+
+/* Common Component Styles */
+.card {
+  background-color: var(--surface-0);
+  border: 1px solid var(--surface-200);
+  border-radius: 6px;
+  padding: 1.25rem;
+}
+
+.button {
+  background-color: var(--primary-500);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 1.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: var(--primary-600);
+}
+
+.button.secondary {
+  background-color: var(--surface-100);
+  color: var(--text-color);
+}
+
+.button.secondary:hover {
+  background-color: var(--surface-200);
+}
+
+.input {
+  background-color: var(--surface-0);
+  border: 1px solid var(--surface-300);
+  color: var(--text-color);
+  border-radius: 6px;
+  padding: 0.75rem;
+}
+
+.input:focus {
+  border-color: var(--primary-500);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--primary-100);
+}
+
+/* Navigation Styles */
+.nav {
+  background-color: var(--surface-0);
+  border-bottom: 1px solid var(--surface-200);
+}
+
+.nav-link {
+  color: var(--text-secondary);
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-link.active {
+  color: var(--primary-500);
+}
+
+/* Highlight Styles */
+.highlight {
+  background-color: var(--highlight-bg);
+  color: var(--highlight-text-color);
+}
+
+/* primevue component restyles */
+
+.p-menu {
+  color: var(--primary-color) !important;
+  color: var(--text-primary) !important;
+}
+
+.p-menu-item-label {
+  color: var(--primary-primary) !important;
+}
