@@ -1,16 +1,6 @@
 <template>
   <div>
-    <ClientOnly>
-      <div>auth status {{ userStore.isAuthenticated }}</div>
-    </ClientOnly>
-    <div>
-      <div>
-        <div><NuxtLink to="/">home</NuxtLink></div>
-        <div><NuxtLink to="/about">about</NuxtLink></div>
-        <div><NuxtLink to="/login">login</NuxtLink></div>
-        <div><NuxtLink to="/register">register</NuxtLink></div>
-      </div>
-    </div>
+    <div class="w-full py-5 bg-primary">navbar</div>
     <div>
       <slot />
     </div>

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-screen w-full bg-gray-50 flex items-center justify-center p-4"
+    class="min-h-screen w-full bg-primary flex items-center justify-center p-4"
   >
     <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6 space-y-4">
       <BaseDarkModeButton />

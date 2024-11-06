@@ -1,73 +1,92 @@
+/* theme.css */
+
+/* Light Theme Variables */
 :root {
-  /* Default Theme Colors */
-  --primary-color: #4a90e2;
-  --primary-text-color: #ffffff;
-  --secondary-text-color: #b1b1b1;
+  /* Primary Colors */
+  --primary-color-50: #eef2ff; /* Corresponds to {indigo.50} */
+  --primary-color-100: #e0e7ff; /* {indigo.100} */
+  --primary-color-200: #c7d2fe; /* {indigo.200} */
+  --primary-color-300: #a5b4fc; /* {indigo.300} */
+  --primary-color-400: #818cf8; /* {indigo.400} */
+  --primary-color-500: #6366f1; /* {indigo.500} */
+  --primary-color-600: #4f46e5; /* {indigo.600} */
+  --primary-color-700: #4338ca; /* {indigo.700} */
+  --primary-color-800: #3730a3; /* {indigo.800} */
+  --primary-color-900: #312e81; /* {indigo.900} */
+  --primary-color-950: #1e1b4b; /* {indigo.950} */
+
+  /* Light Theme Primary */
+  --primary-color: var(--primary-color-950);
+  --primary-inverse-color: #ffffff;
+  --primary-hover-color: var(--primary-color-900);
+  --primary-active-color: var(--primary-color-800);
+
+  /* Highlight Colors */
+  --highlight-background: var(--primary-color-950);
+  --highlight-focus-background: var(--primary-color-700);
+  --highlight-color: #ffffff;
+  --highlight-focus-color: #ffffff;
+
+  /* Form Field */
+  --form-field-hover-border-color: var(--primary-color);
 }
 
 /* Dark Theme Variables */
 .quizy-dark {
-  --primary-color: #7e57c2; /* Purple primary color for dark mode */
-  --primary-text-color: #e0e0e0;
-  --secondary-text-color: #a1a1a1;
-  --background-color: #121212;
-  --card-background-color: #1e1e1e;
-  --text-color: #e0e0e0;
-  --button-bg: #7e57c2;
-  --button-text: #ffffff;
+  /* Primary Colors */
+  --primary-color: var(--primary-color-50);
+  --primary-inverse-color: var(--primary-color-950);
+  --primary-hover-color: var(--primary-color-100);
+  --primary-active-color: var(--primary-color-200);
 
-  /* Additional Colors */
-  --border-color: #333333;
-  --hover-bg: #333333;
-  --input-bg: #2a2a2a;
-  --input-text-color: #e0e0e0;
-  --input-border-color: #444444;
-}
+  /* Highlight Colors */
+  --highlight-background: rgba(250, 250, 250, 0.16);
+  --highlight-focus-background: rgba(250, 250, 250, 0.24);
+  --highlight-color: rgba(255, 255, 255, 0.87);
+  --highlight-focus-color: rgba(255, 255, 255, 0.87);
 
-/* Typography and Text Colors */
-.quizy-dark .text-gray-900 {
-  color: var(--primary-text-color) !important;
-}
-.quizy-dark .text-gray-600 {
-  color: var(--secondary-text-color) !important;
-}
-.quizy-dark .text-gray-500 {
-  color: var(--text-color) !important;
+  /* Form Field */
+  --form-field-hover-border-color: var(--primary-color);
 }
 
-/* Background Colors */
-.quizy-dark .bg-white {
-  background-color: var(--card-background-color) !important;
+/* Custom Typography and Text Colors */
+.text-primary {
+  color: var(--primary-color);
 }
-.quizy-dark .bg-gray-50 {
-  background-color: var(--background-color) !important;
-}
-.quizy-dark .bg-gray-800 {
-  background-color: var(--hover-bg) !important;
+.text-primary-inverse {
+  color: var(--primary-inverse-color);
 }
 
-/* Button Colors */
-.quizy-dark .btn-primary {
-  background-color: var(--button-bg) !important;
-  color: var(--button-text) !important;
+/* Backgrounds */
+.bg-primary {
+  background-color: var(--primary-color);
 }
-.quizy-dark .btn-primary:hover {
-  background-color: lighten(var(--button-bg), 10%) !important;
-}
-
-/* Input Fields */
-.quizy-dark .input,
-.quizy-dark .textarea,
-.quizy-dark .select {
-  background-color: var(--input-bg) !important;
-  color: var(--input-text-color) !important;
-  border-color: var(--input-border-color) !important;
+.bg-highlight {
+  background-color: var(--highlight-background);
 }
 
-/* Borders and Dividers */
-.quizy-dark .border-gray-300 {
-  border-color: var(--border-color) !important;
+/* Buttons */
+.button-primary {
+  background-color: var(--primary-color);
+  color: var(--primary-inverse-color);
 }
-.quizy-dark .divider {
-  border-color: var(--border-color) !important;
+.button-primary:hover {
+  background-color: var(--primary-hover-color);
+}
+.button-primary:active {
+  background-color: var(--primary-active-color);
+}
+
+/* Form Fields */
+.input-field {
+  border-color: var(--form-field-hover-border-color);
+}
+.input-field:focus {
+  background-color: var(--highlight-focus-background);
+  color: var(--highlight-focus-color);
+}
+
+/* Additional Customizations */
+.border-primary {
+  border-color: var(--primary-color);
 }

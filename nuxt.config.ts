@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import Aura from "@primevue/themes/aura";
+import { Noir } from "./core/primevue/AuraPreset";
 
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
@@ -21,9 +21,11 @@ export default defineNuxtConfig({
   primevue: {
     options: {
       theme: {
-        prefix: "quizy",
-        preset: Aura,
-        darkModeSelector: ".quizy-dark",
+        // prefix: "quizy",
+        preset: Noir,
+        options: {
+          darkModeSelector: ".quizy-dark",
+        },
       },
     },
   },

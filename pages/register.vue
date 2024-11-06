@@ -93,7 +93,7 @@
       <div class="flex justify-start items-center gap-4 mt-4">
         <Button type="submit" :disabled="!$form.valid">Register</Button>
         <span class="text-sm text-gray-600">
-          Don't have an account? <NuxtLink href="/register">Register</NuxtLink>
+          Don't have an account? <NuxtLink href="/login">Log in</NuxtLink>
         </span>
       </div>
     </Form>

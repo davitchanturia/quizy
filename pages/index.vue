@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <NuxtLayout name="main">
     <h1>home page</h1>
     <ul>
       <li><NuxtLink to="/login">login</NuxtLink></li>
@@ -9,7 +9,7 @@
     <!-- <div>{{ userStore.isAuthenticated || "no status" }}</div> -->
 
     <button @click="logout">logout</button>
-  </div>
+  </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
