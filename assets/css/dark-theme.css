@@ -1,34 +1,73 @@
-assets/css/dark-theme.css :root {
+:root {
+  /* Default Theme Colors */
   --primary-color: #4a90e2;
   --primary-text-color: #ffffff;
   --secondary-text-color: #b1b1b1;
 }
 
+/* Dark Theme Variables */
 .quizy-dark {
-  --primary-color: #7e57c2; /* Purple base color for dark mode */
+  --primary-color: #7e57c2; /* Purple primary color for dark mode */
   --primary-text-color: #e0e0e0;
+  --secondary-text-color: #a1a1a1;
   --background-color: #121212;
   --card-background-color: #1e1e1e;
   --text-color: #e0e0e0;
   --button-bg: #7e57c2;
   --button-text: #ffffff;
+
+  /* Additional Colors */
+  --border-color: #333333;
+  --hover-bg: #333333;
+  --input-bg: #2a2a2a;
+  --input-text-color: #e0e0e0;
+  --input-border-color: #444444;
 }
 
+/* Typography and Text Colors */
 .quizy-dark .text-gray-900 {
   color: var(--primary-text-color) !important;
 }
 .quizy-dark .text-gray-600 {
   color: var(--secondary-text-color) !important;
 }
+.quizy-dark .text-gray-500 {
+  color: var(--text-color) !important;
+}
 
+/* Background Colors */
 .quizy-dark .bg-white {
   background-color: var(--card-background-color) !important;
 }
-
 .quizy-dark .bg-gray-50 {
   background-color: var(--background-color) !important;
 }
+.quizy-dark .bg-gray-800 {
+  background-color: var(--hover-bg) !important;
+}
 
-.quizy-dark .text-gray-600 {
-  color: var(--text-color) !important;
+/* Button Colors */
+.quizy-dark .btn-primary {
+  background-color: var(--button-bg) !important;
+  color: var(--button-text) !important;
+}
+.quizy-dark .btn-primary:hover {
+  background-color: lighten(var(--button-bg), 10%) !important;
+}
+
+/* Input Fields */
+.quizy-dark .input,
+.quizy-dark .textarea,
+.quizy-dark .select {
+  background-color: var(--input-bg) !important;
+  color: var(--input-text-color) !important;
+  border-color: var(--input-border-color) !important;
+}
+
+/* Borders and Dividers */
+.quizy-dark .border-gray-300 {
+  border-color: var(--border-color) !important;
+}
+.quizy-dark .divider {
+  border-color: var(--border-color) !important;
 }
