@@ -1,12 +1,17 @@
 <template>
   <NuxtLayout name="main">
-    <h1>home page</h1>
+    <div class="w-full flex gap-4">
+      <Filters />
 
-    <button @click="logout">logout</button>
+      <!-- content goes here -->
+      <div class="flex-1"></div>
+    </div>
   </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
+import Filters from "~/components/base/filters.vue";
+
 // definePageMeta({
 //   middleware: ["auth-required"],
 // });
@@ -22,10 +27,4 @@
 //   credentials: "include",
 //   immediate: false,
 // });
-
-const { logoutUser } = useAuth();
-
-const logout = () => {
-  logoutUser();
-};
 </script>
