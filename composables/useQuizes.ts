@@ -15,7 +15,7 @@ export const useQuizes = () => {
     filters.value.difficulty = [];
   };
 
-  const quizes = ref<Quiz[]>([]);
+  const quizzes = ref<Quiz[]>([]);
   const loading = ref(false);
 
   const fetchQuizzes = async (): Promise<void> => {
@@ -23,9 +23,10 @@ export const useQuizes = () => {
 
     try {
       const res = await getQuizes(filters.value);
-      quizes.value = res;
+      quizzes.value = res;
+      console.log("updated", quizzes.value);
     } catch (error) {
-      console.error("Error fetching quizes:", error);
+      console.error("Error fetching quizzes:", error);
     } finally {
       setTimeout(() => {
         loading.value = false;
@@ -37,12 +38,14 @@ export const useQuizes = () => {
 
   watch(filters, debouncedRequest, { deep: true });
 
-  fetchQuizzes();
+  onMounted(() => {
+    fetchQuizzes();
+  });
 
   return {
     filters,
     resetFilters,
-    quizes,
+    quizzes,
     loading,
     fetchQuizzes,
   };

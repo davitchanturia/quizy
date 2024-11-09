@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout name="main">
     <div class="w-full flex gap-4">
-      <QuizzesFilters />
+      <QuizzesFilters :filters @reset-filters="resetFilters" />
 
       <div class="flex-1">
         <div v-if="loading" class="flex flex-wrap gap-5">
@@ -9,7 +9,7 @@
         </div>
         <div v-else class="flex flex-wrap gap-5">
           <QuizCard
-            v-for="quiz in quizesData"
+            v-for="quiz in quizzes"
             :key="quiz.id"
             :title="quiz.title"
             :category="quiz.category.name"
@@ -24,9 +24,5 @@
 <script lang="ts" setup>
 import QuizzesFilters from "~/components/QuizzesFilters.vue";
 
-const { quizes, loading } = useQuizes();
-
-const quizesData = computed(() => quizes.value);
-
-console.log(quizesData);
+const { quizzes, loading, filters, resetFilters } = useQuizes();
 </script>
