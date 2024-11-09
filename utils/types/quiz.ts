@@ -8,3 +8,9 @@ export type Quiz = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type QuizzesFilters = {
+  search: string;
+  categories: string[];
+  difficulty: string[];
+};

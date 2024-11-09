@@ -1,17 +1,17 @@
-import type { Quiz } from "~/utils/types/quiz";
+import type { Quiz, QuizzesFilters } from "~/utils/types/quiz";
 
-export const getQuizes = async (): Promise<Quiz[]> => {
+export const getQuizes = async (filters: QuizzesFilters): Promise<Quiz[]> => {
   const config = useRuntimeConfig();
 
-  const { data, error } = useFetch(`${config.public.API_BASE_URL}/quiz`, {
-    credentials: "include",
-  });
+  try {
+    const data = await $fetch<Quiz[]>(`${config.public.API_BASE_URL}/quiz`, {
+      credentials: "include",
+      params: filters || {},
+    });
 
-  if (error.value) {
-    console.error("Failed to fetch data:", error.value);
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+    throw error;
   }
-
-  console.log(data);
-
-  return data.value as Quiz[];
 };

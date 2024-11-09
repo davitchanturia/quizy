@@ -4,32 +4,20 @@
       <Filters />
 
       <!-- content goes here -->
-      <div class="flex-1"></div>
+      <div class="flex-1">
+        <div v-if="loading">loading...</div>
+        <div v-else>
+          <div v-for="quiz in quizesData" :key="quiz.id">{{ quiz.title }}</div>
+        </div>
+      </div>
     </div>
   </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
 import Filters from "~/components/base/Filters.vue";
-import { getQuizes } from "~/services/quiz";
 
-// definePageMeta({
-//   middleware: ["auth-required"],
-// });
-// const config = useRuntimeConfig();
+const { quizes, loading } = useQuizes();
 
-// const token = useCookie("XSRF-TOKEN");
-
-// const { data, execute } = useFetch(`${config.public.API_BASE_URL}/user`, {
-//   headers: {
-//     contentType: "application/json",
-//     accept: "application/json",
-//   },
-//   credentials: "include",
-//   immediate: false,
-// });
-
-const response = await getQuizes();
-
-console.log(response);
+const quizesData = computed(() => quizes.value);
 </script>
