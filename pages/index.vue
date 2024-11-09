@@ -12,6 +12,8 @@
             v-for="quiz in quizesData"
             :key="quiz.id"
             :title="quiz.title"
+            :category="quiz.category.name"
+            :difficulty="quiz.difficulty"
           />
         </div>
       </div>
@@ -25,4 +27,6 @@ import QuizzesFilters from "~/components/QuizzesFilters.vue";
 const { quizes, loading } = useQuizes();
 
 const quizesData = computed(() => quizes.value);
+
+console.log(quizesData);
 </script>

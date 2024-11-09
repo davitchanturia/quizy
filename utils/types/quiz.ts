@@ -5,6 +5,8 @@ export type Quiz = {
   questions: [];
   is_active: boolean;
   owner: string;
+  category: QuizCategory;
+  difficulty: QuizDifficulty;
   createdAt: string;
   updatedAt: string;
 };
@@ -14,3 +16,9 @@ export type QuizzesFilters = {
   categories: string[];
   difficulty: string[];
 };
+
+export type QuizCategory = {
+  name: string;
+};
+
+export type QuizDifficulty = "easy" | "medium" | "hard";

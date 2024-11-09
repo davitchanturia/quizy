@@ -20,7 +20,7 @@
       <div class="flex text-sm">
         <div class="flex items-center gap-2">
           <i class="pi pi-chart-bar"></i>
-          <span>Difficult</span>
+          <span class="capitalize">{{ difficulty }}</span>
         </div>
       </div>
     </template>
@@ -28,5 +28,9 @@
 </template>
 
 <script setup lang="ts">
-const { title, category = "programming" } = defineProps(["title", "category"]);
+const { title, category, difficulty } = defineProps([
+  "title",
+  "category",
+  "difficulty",
+]);
 </script>
