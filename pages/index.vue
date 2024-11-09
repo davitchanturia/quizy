@@ -1,13 +1,17 @@
 <template>
   <NuxtLayout name="main">
     <div class="w-full flex gap-4">
-      <Filters />
+      <QuizzesFilters />
 
       <!-- content goes here -->
       <div class="flex-1">
         <div v-if="loading">loading...</div>
-        <div v-else>
-          <div v-for="quiz in quizesData" :key="quiz.id">{{ quiz.title }}</div>
+        <div v-else class="flex flex-wrap gap-5">
+          <QuizCard
+            v-for="quiz in quizesData"
+            :key="quiz.id"
+            :title="quiz.title"
+          />
         </div>
       </div>
     </div>
@@ -15,7 +19,7 @@
 </template>
 
 <script lang="ts" setup>
-import Filters from "~/components/base/Filters.vue";
+import QuizzesFilters from "~/components/QuizzesFilters.vue";
 
 const { quizes, loading } = useQuizes();
 
