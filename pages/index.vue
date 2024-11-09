@@ -10,7 +10,8 @@
 </template>
 
 <script lang="ts" setup>
-import Filters from "~/components/base/filters.vue";
+import Filters from "~/components/base/Filters.vue";
+import { getQuizes } from "~/services/quiz";
 
 // definePageMeta({
 //   middleware: ["auth-required"],
@@ -27,4 +28,8 @@ import Filters from "~/components/base/filters.vue";
 //   credentials: "include",
 //   immediate: false,
 // });
+
+const response = await getQuizes();
+
+console.log(response);
 </script>
