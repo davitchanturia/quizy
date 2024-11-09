@@ -9,7 +9,7 @@
               label="Clear"
               class="p-button-text !text-xs"
               size="small"
-              @click="resetFilters"
+              @click="emit('resetFilters')"
             />
           </div>
           <div class="mt-4 mb-6">
@@ -29,7 +29,7 @@
             <div>Categories:</div>
             <MultiSelect
               v-model="filters.categories"
-              :options="categoriesOptions"
+              :options="categoryOptions"
               option-label="name"
               filter
               placeholder="Select Categories"
@@ -44,32 +44,18 @@
           <div class="mt-4 mb-6">
             <div>Difficulty:</div>
             <div class="flex flex-col gap-4 mt-2 text-sm">
-              <div class="flex items-center gap-2">
+              <div
+                v-for="(label, value) in difficultyOptions"
+                :key="value"
+                class="flex items-center gap-2"
+              >
                 <RadioButton
                   v-model="filters.difficulty"
-                  input-id="ingredient1"
+                  :input-id="value"
                   name="difficulty"
-                  value="Easy"
+                  :value="value"
                 />
-                <label for="ingredient1"> Easy </label>
-              </div>
-              <div class="flex items-center gap-2">
-                <RadioButton
-                  v-model="filters.difficulty"
-                  input-id="ingredient2"
-                  name="difficulty"
-                  value="Medium"
-                />
-                <label for="ingredient2"> Medium </label>
-              </div>
-              <div class="flex items-center gap-2">
-                <RadioButton
-                  v-model="filters.difficulty"
-                  input-id="ingredient3"
-                  name="difficulty"
-                  value="Hard"
-                />
-                <label for="ingredient3"> Hard </label>
+                <label for="ingredient1"> {{ label }} </label>
               </div>
             </div>
           </div>
@@ -80,23 +66,19 @@
 </template>
 
 <script setup lang="ts">
-const { filters, resetFilters } = useQuizes();
+import { getQuizCategories } from "~/services/quiz";
 
-const categoriesOptions = ref([
-  { name: "JavaScript", code: "JS" },
-  { name: "Python", code: "PY" },
-  { name: "Java", code: "JAVA" },
-  { name: "C++", code: "CPP" },
-  { name: "C#", code: "CSHARP" },
-  { name: "HTML & CSS", code: "HTMLCSS" },
-  { name: "SQL", code: "SQL" },
-  { name: "Ruby", code: "RUBY" },
-  { name: "Go", code: "GO" },
-  { name: "Rust", code: "RUST" },
-  { name: "Swift", code: "SWIFT" },
-  { name: "PHP", code: "PHP" },
-  { name: "TypeScript", code: "TS" },
-  { name: "Kotlin", code: "KOTLIN" },
-  { name: "R", code: "R" },
-]);
+const { filters } = defineProps(["filters"]);
+
+const emit = defineEmits<{
+  (e: "resetFilters"): void;
+}>();
+
+const difficultyOptions = {
+  easy: "Easy",
+  medium: "Medium",
+  hard: "Hard",
+};
+
+const categoryOptions = await getQuizCategories();
 </script>
