@@ -3,9 +3,10 @@
     <div class="w-full flex gap-4">
       <QuizzesFilters />
 
-      <!-- content goes here -->
       <div class="flex-1">
-        <div v-if="loading">loading...</div>
+        <div v-if="loading" class="flex flex-wrap gap-5">
+          <QuizCardSkeleton v-for="item in 8" :key="item" />
+        </div>
         <div v-else class="flex flex-wrap gap-5">
           <QuizCard
             v-for="quiz in quizesData"
