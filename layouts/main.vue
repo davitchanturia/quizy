@@ -21,11 +21,25 @@
         </div>
       </div>
     </div>
+
     <div class="bg-primary text-primary-inverse">
       <div class="max-w-7xl h-screen mx-auto py-5">
         <slot />
       </div>
     </div>
+
+    <Dialog
+      v-model:visible="showDialog"
+      modal
+      header="Do you want to log out?"
+      :style="{ width: '30vw' }"
+      :breakpoints="{ '1220px': '30vw', '1024px': '50vw', '610px': '90vw' }"
+    >
+      <div class="flex justify-end items-center gap-3">
+        <Button label="cancel" severity="link" @click="showDialog = false" />
+        <Button label="confirm" @click="logoutUser" />
+      </div>
+    </Dialog>
   </div>
 </template>
 
@@ -39,6 +53,8 @@ type MenuItem = {
   items?: MenuItem[];
 };
 
+const showDialog = ref(false);
+
 const menu = ref();
 const items = ref<MenuItem[]>([
   {
@@ -48,7 +64,7 @@ const items = ref<MenuItem[]>([
         label: "Log out",
         icon: "pi pi-sign-out",
         command: () => {
-          logoutUser();
+          showDialog.value = true;
         },
       },
     ],
