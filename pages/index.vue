@@ -1,8 +1,8 @@
 <template>
   <NuxtLayout name="main">
     <div class="w-full flex gap-4">
-      <QuizzesFiltersSkeleton v-if="loading" />
-      <QuizzesFilters v-else :filters @reset-filters="resetFilters" />
+      <QuizFiltersSkeleton v-if="showFiltersSkeleton" />
+      <QuizFilters v-else :filters @reset-filters="resetFilters" />
 
       <div class="flex-1">
         <div v-if="loading" class="flex flex-wrap gap-5">
@@ -23,7 +23,10 @@
 </template>
 
 <script lang="ts" setup>
-import QuizzesFilters from "~/components/QuizzesFilters.vue";
+const { quizzes, loading, filters, filtersAreInitial, resetFilters } =
+  useQuizes();
 
-const { quizzes, loading, filters, resetFilters } = useQuizes();
+const showFiltersSkeleton = computed(
+  () => loading.value && filtersAreInitial.value
+);
 </script>

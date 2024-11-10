@@ -9,6 +9,14 @@ export const useQuizes = () => {
     difficulty: [],
   });
 
+  const filtersAreInitial = computed(() => {
+    return (
+      filters.value.search === "" &&
+      filters.value.categories.length === 0 &&
+      filters.value.difficulty.length === 0
+    );
+  });
+
   const resetFilters = (): void => {
     filters.value.search = "";
     filters.value.categories = [];
@@ -43,6 +51,7 @@ export const useQuizes = () => {
 
   return {
     filters,
+    filtersAreInitial,
     resetFilters,
     quizzes,
     loading,
