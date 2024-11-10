@@ -24,7 +24,6 @@ export const useQuizes = () => {
     try {
       const res = await getQuizes(filters.value);
       quizzes.value = res;
-      console.log("updated", quizzes.value);
     } catch (error) {
       console.error("Error fetching quizzes:", error);
     } finally {

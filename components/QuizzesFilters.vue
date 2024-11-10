@@ -36,6 +36,7 @@
               :max-selected-labels="3"
               class="w-full mt-2"
               size="small"
+              option-value="id"
             />
           </div>
 

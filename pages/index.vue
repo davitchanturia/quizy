@@ -1,7 +1,8 @@
 <template>
   <NuxtLayout name="main">
     <div class="w-full flex gap-4">
-      <QuizzesFilters :filters @reset-filters="resetFilters" />
+      <QuizzesFiltersSkeleton v-if="loading" />
+      <QuizzesFilters v-else :filters @reset-filters="resetFilters" />
 
       <div class="flex-1">
         <div v-if="loading" class="flex flex-wrap gap-5">

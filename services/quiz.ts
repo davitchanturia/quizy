@@ -2,11 +2,28 @@ import type { Quiz, QuizCategory, QuizzesFilters } from "~/utils/types/quiz";
 
 export const getQuizes = async (filters: QuizzesFilters): Promise<Quiz[]> => {
   const config = useRuntimeConfig();
+  const CSRF_TOKEN = useCookie("XSRF-TOKEN");
+
+  const queryParams = {
+    search: filters.search,
+    difficulty: filters.difficulty,
+  };
+
+  const bodyParams = {
+    categories: filters.categories,
+  };
 
   try {
     const data = await $fetch<Quiz[]>(`${config.public.API_BASE_URL}/quiz`, {
+      method: "POST",
       credentials: "include",
-      params: filters || {},
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
+      },
+      params: queryParams || {},
+      body: bodyParams || {},
     });
 
     return data;
