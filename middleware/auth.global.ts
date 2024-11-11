@@ -13,11 +13,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     }
   }
 
-  if (!userStore.isAuthenticated && !authPages.includes(to.path)) {
-    return navigateTo("/login");
+  if (userStore.isAuthenticated && authPages.includes(to.path)) {
+    return navigateTo(from.path && from.path !== to.path ? from.path : "/");
   }
 
-  if (userStore.isAuthenticated && authPages.includes(to.path)) {
-    return navigateTo("/");
+  if (!userStore.isAuthenticated && !authPages.includes(to.path)) {
+    return navigateTo("/login");
   }
 });
