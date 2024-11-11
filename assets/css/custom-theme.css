@@ -190,8 +190,8 @@
 
 /* Highlight Styles */
 .highlight {
-  background-color: var(--highlight-bg);
-  color: var(--highlight-text-color);
+  background-color: var(--highlight-bg) !important;
+  color: var(--highlight-text-color) !important;
 }
 
 /* primevue component restyles */

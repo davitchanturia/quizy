@@ -3,7 +3,8 @@
     <div class="w-full bg-primary text-primary-inverse shadow-lg">
       <div class="max-w-7xl mx-auto py-2 flex justify-between items-center">
         <!-- left -->
-        <div class="text-xl text-color">Quizy</div>
+
+        <NuxtLink to="/" class="text-xl text-primary">Quizy</NuxtLink>
 
         <!-- right -->
         <div class="flex gap-2">
@@ -17,7 +18,7 @@
             variant="text"
             @click="toggle"
           />
-          <Menu id="overlay_menu" ref="menu" :model="items" :popup="true" />
+          <Menu id="overlay_menu" ref="menu" :model="menuItems" :popup="true" />
         </div>
       </div>
     </div>
@@ -44,6 +45,8 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from "~/store/useUserStore";
+
 const { logoutUser } = useAuth();
 
 type MenuItem = {
@@ -53,13 +56,22 @@ type MenuItem = {
   items?: MenuItem[];
 };
 
+const userStore = useUserStore();
+
 const showDialog = ref(false);
 
 const menu = ref();
-const items = ref<MenuItem[]>([
+const menuItems = ref<MenuItem[]>([
   {
-    label: "Actions",
+    label: "Profile",
     items: [
+      {
+        label: "Account",
+        icon: "pi pi-user",
+        command: () => {
+          navigateTo(`/user/${userStore.user?.id}`);
+        },
+      },
       {
         label: "Log out",
         icon: "pi pi-sign-out",

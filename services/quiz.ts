@@ -35,11 +35,17 @@ export const getQuizes = async (filters: QuizzesFilters): Promise<Quiz[]> => {
 
 export const getQuizCategories = async (): Promise<QuizCategory[]> => {
   const config = useRuntimeConfig();
+  const CSRF_TOKEN = useCookie("XSRF-TOKEN");
 
   try {
     const data = await $fetch<QuizCategory[]>(
       `${config.public.API_BASE_URL}/quiz/categories`,
       {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
+        },
         credentials: "include",
       }
     );

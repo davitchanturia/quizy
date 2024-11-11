@@ -1,3 +1,3 @@
 <template>
-  <div>about page</div>
+  <NuxtLayout name="main"> about page</NuxtLayout>
 </template>
