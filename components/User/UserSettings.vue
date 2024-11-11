@@ -54,89 +54,13 @@
 </template>
 
 <script setup lang="ts">
-import type { FileUploadSelectEvent } from "primevue";
-import { uploadAvatar } from "~/services/user";
-import { useUserStore } from "~/store/useUserStore";
-
-const userStore = useUserStore();
-const toast = useToast();
-
-const name = ref<string | undefined>(userStore.user?.name);
-const email = ref<string | undefined>(userStore.user?.email);
-
-const avatarFile = ref<File | null>(null);
-const avatarSrc = ref<string | null>(null);
-
-const validImageTypes = ["image/jpeg", "image/png", "image/gif", "image/jpg"];
-
-const fileIsValidImage = (file: File) => validImageTypes.includes(file.type);
-
-function onFileSelect(event: FileUploadSelectEvent) {
-  const file = event.files[0];
-
-  if (file && file.size < 1024 * 1024) {
-    if (!fileIsValidImage(file)) {
-      toast.add({
-        severity: "error",
-        summary: "Provided file is not valid image!",
-        life: 3000,
-      });
-      return;
-    }
-
-    avatarFile.value = file;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      avatarSrc.value = e.target?.result as string;
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
-const uploadAvatarHandler = async () => {
-  if (!avatarFile.value) {
-    toast.add({
-      severity: "error",
-      summary: "Error Message",
-      detail: "Please select an image",
-      life: 3000,
-    });
-    return;
-  }
-
-  try {
-    const formData = new FormData();
-    formData.append("avatar", avatarFile.value);
-
-    const response = await uploadAvatar(formData);
-
-    userStore.setUserAvatar(response.avatar_url);
-
-    toast.add({
-      severity: "success",
-      summary: "Avatar changed successfully!",
-      life: 3000,
-    });
-
-    avatarFile.value = null;
-  } catch (error: any) {
-    toast.add({
-      severity: "error",
-      summary: error?.message || "Failed to upload avatar",
-      life: 3000,
-    });
-  }
-};
-
-const removeAvatarHandler = () => {
-  avatarFile.value = null;
-  avatarSrc.value = null;
-};
-
-const config = useRuntimeConfig();
-const fullAvatarUrl = `${config.public.BACKEND_BASE_URL}/storage/${userStore?.user?.avatar}`;
-const avatarUrl = computed(() => avatarSrc.value ?? fullAvatarUrl);
+const {
+  avatarFile,
+  avatarUrl,
+  onFileSelect,
+  uploadAvatarHandler,
+  removeAvatarHandler,
+} = useUserAvatar();
 </script>
 
 <style scoped>
