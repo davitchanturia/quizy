@@ -1,37 +1,41 @@
 <template>
   <NuxtLayout name="main">
     <div class="w-full flex gap-4 user-page">
-      <Card>
-        <template #content>
-          <Button
-            label="Settings"
-            icon="pi pi-cog"
-            variant="text"
-            class="!w-full"
-            :class="activeTab === 'settings' ? 'highlight' : ''"
-            @click="activeTab = 'settings'"
-          />
-          <Button
-            label="My Quizes"
-            icon="pi pi-th-large"
-            variant="text"
-            class="!w-full mt-2"
-            :class="activeTab === 'my-quizes' ? 'highlight' : ''"
-            @click="activeTab = 'my-quizes'"
-          />
-        </template>
-      </Card>
+      <div class="w-64">
+        <Card>
+          <template #content>
+            <Button
+              label="Settings"
+              icon="pi pi-cog"
+              variant="text"
+              class="!w-full"
+              :class="activeTab === 'settings' ? 'highlight' : ''"
+              @click="activeTab = 'settings'"
+            />
+            <Button
+              label="My Quizes"
+              icon="pi pi-th-large"
+              variant="text"
+              class="!w-full mt-2"
+              :class="activeTab === 'my-quizes' ? 'highlight' : ''"
+              @click="activeTab = 'my-quizes'"
+            />
+          </template>
+        </Card>
+      </div>
 
-      <Tabs v-model:value="activeTab" class="flex-1">
-        <TabPanels>
-          <TabPanel value="settings">
-            <p class="m-0">settings tab</p>
-          </TabPanel>
-          <TabPanel value="my-quizes">
-            <p class="m-0">quizes tab</p>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <div class="flex-1">
+        <Tabs v-model:value="activeTab" class="flex-1">
+          <TabPanels>
+            <TabPanel value="settings">
+              <UserSettings />
+            </TabPanel>
+            <TabPanel value="my-quizes">
+              <p class="m-0">quizes tab</p>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </div>
     </div>
   </NuxtLayout>
 </template>

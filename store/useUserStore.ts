@@ -22,5 +22,11 @@ export const useUserStore = defineStore("user", () => {
 
   const logout = () => (user.value = null);
 
-  return { user, isAuthenticated, fetchUser, setUser, logout };
+  const setUserAvatar = (avatarUrl: string) => {
+    if (user.value) {
+      user.value.avatar = avatarUrl;
+    }
+  };
+
+  return { user, isAuthenticated, fetchUser, setUser, logout, setUserAvatar };
 });
