@@ -54,6 +54,13 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from "~/store/useUserStore";
+
+const userStore = useUserStore();
+
+const name = ref(userStore.user?.name);
+const email = ref(userStore.user?.email);
+
 const {
   avatarFile,
   avatarUrl,
