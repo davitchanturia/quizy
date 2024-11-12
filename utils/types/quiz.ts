@@ -1,10 +1,12 @@
+import type { User } from "./auth";
+
 export type Quiz = {
   id: number;
   title: string;
   description: string;
   questions: [];
   is_active: boolean;
-  owner: string;
+  owner: User;
   category: QuizCategory;
   difficulty: QuizDifficulty;
   createdAt: string;

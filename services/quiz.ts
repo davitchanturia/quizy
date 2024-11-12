@@ -1,6 +1,6 @@
 import type { Quiz, QuizCategory, QuizzesFilters } from "~/utils/types/quiz";
 
-export const getQuizes = async (filters: QuizzesFilters): Promise<Quiz[]> => {
+export const getQuizzes = async (filters: QuizzesFilters): Promise<Quiz[]> => {
   const config = useRuntimeConfig();
   const CSRF_TOKEN = useCookie("XSRF-TOKEN");
 
@@ -14,7 +14,7 @@ export const getQuizes = async (filters: QuizzesFilters): Promise<Quiz[]> => {
   };
 
   try {
-    const data = await $fetch<Quiz[]>(`${config.public.API_BASE_URL}/quiz`, {
+    const data = await $fetch<Quiz[]>(`${config.public.API_BASE_URL}/quizzes`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -33,7 +33,31 @@ export const getQuizes = async (filters: QuizzesFilters): Promise<Quiz[]> => {
   }
 };
 
-export const getQuizCategories = async (): Promise<QuizCategory[]> => {
+export const getQuiz = async (id: string): Promise<Quiz> => {
+  const config = useRuntimeConfig();
+  const CSRF_TOKEN = useCookie("XSRF-TOKEN");
+
+  try {
+    const quiz = await $fetch<Quiz>(
+      `${config.public.API_BASE_URL}/quiz/${id}`,
+      {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
+        },
+      }
+    );
+
+    return quiz as Quiz;
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+    throw error;
+  }
+};
+
+export const getQuizCategories = async () => {
   const config = useRuntimeConfig();
   const CSRF_TOKEN = useCookie("XSRF-TOKEN");
 
@@ -50,7 +74,7 @@ export const getQuizCategories = async (): Promise<QuizCategory[]> => {
       }
     );
 
-    return data;
+    return data as QuizCategory[];
   } catch (error) {
     console.error("Failed to fetch data:", error);
     throw error;

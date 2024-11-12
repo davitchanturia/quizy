@@ -11,6 +11,7 @@
         <div v-else class="flex flex-wrap gap-5">
           <QuizCard
             v-for="quiz in quizzes"
+            :id="quiz.id"
             :key="quiz.id"
             :title="quiz.title"
             :category="quiz.category.name"

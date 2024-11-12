@@ -1,5 +1,5 @@
 <template>
-  <Card class="w-80 cursor-pointer hover:">
+  <Card class="w-80 cursor-pointer hover:" @click="navigateTo(`/quiz/${id}`)">
     <template #header>
       <div class="flex justify-between items-center p-4">
         <div class="flex flex-end justify-end h-full">
@@ -28,9 +28,10 @@
 </template>
 
 <script setup lang="ts">
-const { title, category, difficulty } = defineProps([
+const { title, category, difficulty, id } = defineProps([
   "title",
   "category",
   "difficulty",
+  "id",
 ]);
 </script>

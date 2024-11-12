@@ -1,4 +1,4 @@
-import { getQuizes } from "~/services/quiz";
+import { getQuizzes } from "~/services/quiz";
 import type { Quiz, QuizzesFilters } from "~/utils/types/quiz";
 import { useDebounceFn } from "@vueuse/core";
 
@@ -30,7 +30,7 @@ export const useQuizes = () => {
     loading.value = true;
 
     try {
-      const res = await getQuizes(filters.value);
+      const res = await getQuizzes(filters.value);
       quizzes.value = res;
     } catch (error) {
       console.error("Error fetching quizzes:", error);
