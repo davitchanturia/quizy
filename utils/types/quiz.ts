@@ -24,3 +24,27 @@ export type QuizCategory = {
 };
 
 export type QuizDifficulty = "easy" | "medium" | "hard";
+
+export type Question = {
+  id: number;
+  quizId: number;
+  content: string;
+  options: string[];
+  answers: Answer[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Answer = {
+  id: number;
+  questionId: number;
+  content: string;
+  is_correct: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Choice = {
+  question_id: number | null;
+  answer_id: number | null;
+};

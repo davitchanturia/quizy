@@ -44,9 +44,11 @@
 
 <script lang="ts" setup>
 import { getQuiz } from "~/services/quiz";
+import { useQuizStore } from "~/store/useQuizStore";
 
 const useQuiz = () => {
   const route = useRoute();
+  const quizStore = useQuizStore();
 
   const quiz = ref();
   const loading = ref(false);
@@ -55,7 +57,9 @@ const useQuiz = () => {
     try {
       loading.value = true;
       const quizData = await getQuiz(route.params.id as string);
+
       quiz.value = quizData;
+      quizStore.setQuestions(quizData.questions);
     } catch (error) {
       console.log(error);
     } finally {
