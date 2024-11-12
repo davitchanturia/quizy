@@ -26,7 +26,17 @@
 
         <div class="w-full mt-8">{{ quiz?.description }}</div>
 
-        <Button class="mt-5">Stat quiz</Button>
+        <Button class="mt-5" @click="showDialog = true">Stat quiz</Button>
+
+        <Dialog
+          v-model:visible="showDialog"
+          maximizable
+          modal
+          :style="{ width: '80vw' }"
+          :breakpoints="{ '1199px': '80vw', '575px': '90vw' }"
+        >
+          <QuizPlay />
+        </Dialog>
       </div>
     </div>
   </NuxtLayout>
@@ -65,4 +75,6 @@ const { quiz, loading, getQuizData } = useQuiz();
 onMounted(async () => {
   await getQuizData();
 });
+
+const showDialog = ref(false);
 </script>
