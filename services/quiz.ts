@@ -1,4 +1,9 @@
-import type { Quiz, QuizCategory, QuizzesFilters } from "~/utils/types/quiz";
+import type {
+  Choice,
+  Quiz,
+  QuizCategory,
+  QuizzesFilters,
+} from "~/utils/types/quiz";
 
 export const getQuizzes = async (filters: QuizzesFilters): Promise<Quiz[]> => {
   const config = useRuntimeConfig();
@@ -53,6 +58,35 @@ export const getQuiz = async (id: string): Promise<Quiz> => {
     return quiz as Quiz;
   } catch (error) {
     console.error("Failed to fetch data:", error);
+    throw error;
+  }
+};
+
+export const storeQuiz = async (
+  choices: Choice[],
+  quizId: string,
+  userId: number | undefined
+) => {
+  const config = useRuntimeConfig();
+  const CSRF_TOKEN = useCookie("XSRF-TOKEN");
+
+  try {
+    await $fetch<Quiz>(`${config.public.API_BASE_URL}/quiz/${quizId}/choices`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
+      },
+      body: {
+        quiz_id: quizId,
+        user_id: userId,
+        choices,
+      },
+    });
+  } catch (error) {
+    console.error("Failed to store data:", error);
     throw error;
   }
 };

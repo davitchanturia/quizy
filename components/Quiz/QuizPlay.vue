@@ -22,7 +22,7 @@
         "
         :disabled="quizStore.currentChoice?.answer_id !== undefined"
         @click="answerHandler(answer)"
-        >{{ `${answer.is_correct} - ${answer.content}` }}</Button
+        >{{ answer.content }}</Button
       >
     </div>
 
@@ -30,7 +30,17 @@
       <Button :disabled="quizStore.disableUndoButton" @click="undoHandler"
         >Previous</Button
       >
-      <Button :disabled="quizStore.disableNextButton" @click="nextHandler"
+
+      <Button
+        v-if="quizStore.showSubmitButton"
+        :disabled="quizStore.disableSubmitButton"
+        @click="submitHandler"
+        >Submit</Button
+      >
+      <Button
+        v-else
+        :disabled="quizStore.disableNextButton"
+        @click="nextHandler"
         >Next</Button
       >
     </div>
@@ -39,12 +49,20 @@
 
 <script lang="ts" setup>
 import { useQuizStore } from "~/store/useQuizStore";
-import type { Answer } from "~/utils/types/quiz";
+import type { Answer, Choice } from "~/utils/types/quiz";
+
+const emit = defineEmits<{
+  (e: "submit", value: Choice[]): void;
+}>();
 
 const quizStore = useQuizStore();
 
 const answerHandler = (answer: Answer) => {
   quizStore.setChoice(answer);
+};
+
+const submitHandler = () => {
+  emit("submit", quizStore.choices);
 };
 
 const undoHandler = () => {

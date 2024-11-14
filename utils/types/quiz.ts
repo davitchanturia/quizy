@@ -47,4 +47,5 @@ export type Answer = {
 export type Choice = {
   question_id: number | null;
   answer_id: number | null;
+  is_correct: boolean;
 };

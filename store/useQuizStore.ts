@@ -46,6 +46,7 @@ export const useQuizStore = defineStore("quiz", () => {
     Array.from({ length: questionsLength.value }, () => ({
       question_id: null,
       answer_id: null,
+      is_correct: false,
     }))
   );
 
@@ -58,6 +59,7 @@ export const useQuizStore = defineStore("quiz", () => {
       choices.value[currentQuestionIndex.value] = {
         question_id: currentQuestion.value.id,
         answer_id: answer.id,
+        is_correct: answer.is_correct,
       };
     }
   };
@@ -88,6 +90,14 @@ export const useQuizStore = defineStore("quiz", () => {
       currentChoice.value?.answer_id === undefined
   );
 
+  const showSubmitButton = computed<boolean>(
+    () => currentQuestionIndex.value === questionsLength.value - 1
+  );
+
+  const disableSubmitButton = computed<boolean>(
+    () => currentChoice.value?.answer_id === undefined
+  );
+
   return {
     step,
     nextStep,
@@ -104,5 +114,7 @@ export const useQuizStore = defineStore("quiz", () => {
     undo,
     disableUndoButton,
     disableNextButton,
+    disableSubmitButton,
+    showSubmitButton,
   };
 });

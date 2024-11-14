@@ -35,7 +35,10 @@
           :style="{ width: '80vw' }"
           :breakpoints="{ '1199px': '80vw', '575px': '90vw' }"
         >
-          <QuizPlay />
+          <div v-if="showResults">results of the quiz</div>
+          <QuizPlay v-else @submit="sendQuiz" />
+
+          <div v-if="loadingQuizSubmission">saving quiz...</div>
         </Dialog>
       </div>
     </div>
@@ -43,11 +46,16 @@
 </template>
 
 <script lang="ts" setup>
-import { getQuiz } from "~/services/quiz";
+import { getQuiz, storeQuiz } from "~/services/quiz";
 import { useQuizStore } from "~/store/useQuizStore";
+import { useUserStore } from "~/store/useUserStore";
+import type { Choice } from "~/utils/types/quiz";
+
+const route = useRoute();
+
+const quizId = route.params.id as string;
 
 const useQuiz = () => {
-  const route = useRoute();
   const quizStore = useQuizStore();
 
   const quiz = ref();
@@ -56,7 +64,7 @@ const useQuiz = () => {
   const getQuizData = async (): Promise<void> => {
     try {
       loading.value = true;
-      const quizData = await getQuiz(route.params.id as string);
+      const quizData = await getQuiz(quizId);
 
       quiz.value = quizData;
       quizStore.setQuestions(quizData.questions);
@@ -81,4 +89,32 @@ onMounted(async () => {
 });
 
 const showDialog = ref(false);
+
+const submitQuiz = () => {
+  const showResults = ref<boolean>(false);
+  const loadingQuizSubmission = ref(false);
+
+  const userStore = useUserStore();
+
+  const sendQuiz = async (quizData: Choice[]) => {
+    try {
+      loadingQuizSubmission.value = true;
+      await storeQuiz(quizData, quizId, userStore.user?.id);
+
+      showResults.value = true;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      loadingQuizSubmission.value = false;
+    }
+  };
+
+  return {
+    showResults,
+    loadingQuizSubmission,
+    sendQuiz,
+  };
+};
+
+const { showResults, loadingQuizSubmission, sendQuiz } = submitQuiz();
 </script>
