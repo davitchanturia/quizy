@@ -71,20 +71,25 @@ export const storeQuiz = async (
   const CSRF_TOKEN = useCookie("XSRF-TOKEN");
 
   try {
-    await $fetch<Quiz>(`${config.public.API_BASE_URL}/quiz/${quizId}/choices`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
-      },
-      body: {
-        quiz_id: quizId,
-        user_id: userId,
-        choices,
-      },
-    });
+    const response = await $fetch<Quiz>(
+      `${config.public.API_BASE_URL}/quiz/${quizId}/choices`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
+        },
+        body: {
+          quiz_id: quizId,
+          user_id: userId,
+          choices,
+        },
+      }
+    );
+
+    return response;
   } catch (error) {
     console.error("Failed to store data:", error);
     throw error;

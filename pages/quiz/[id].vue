@@ -35,10 +35,11 @@
           :style="{ width: '80vw' }"
           :breakpoints="{ '1199px': '80vw', '575px': '90vw' }"
         >
-          <div v-if="showResults">results of the quiz</div>
-          <QuizPlay v-else @submit="sendQuiz" />
+          <!-- <div v-if="showResults">results of the quiz {{ response }}</div> -->
+          <QuizResults />
+          <!-- <QuizPlay v-else @submit="sendQuiz" /> -->
 
-          <div v-if="loadingQuizSubmission">saving quiz...</div>
+          <!-- <div v-if="loadingQuizSubmission">saving quiz...</div> -->
         </Dialog>
       </div>
     </div>
@@ -94,13 +95,16 @@ const submitQuiz = () => {
   const showResults = ref<boolean>(false);
   const loadingQuizSubmission = ref(false);
 
+  const response = ref();
+
   const userStore = useUserStore();
 
   const sendQuiz = async (quizData: Choice[]) => {
     try {
       loadingQuizSubmission.value = true;
-      await storeQuiz(quizData, quizId, userStore.user?.id);
+      const res = await storeQuiz(quizData, quizId, userStore.user?.id);
 
+      response.value = res;
       showResults.value = true;
     } catch (error) {
       console.log(error);
@@ -113,8 +117,9 @@ const submitQuiz = () => {
     showResults,
     loadingQuizSubmission,
     sendQuiz,
+    response,
   };
 };
 
-const { showResults, loadingQuizSubmission, sendQuiz } = submitQuiz();
+const { showResults, loadingQuizSubmission, sendQuiz, response } = submitQuiz();
 </script>
