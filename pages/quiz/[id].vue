@@ -35,11 +35,10 @@
           :style="{ width: '80vw' }"
           :breakpoints="{ '1199px': '80vw', '575px': '90vw' }"
         >
-          <!-- <div v-if="showResults">results of the quiz {{ response }}</div> -->
-          <QuizResults />
-          <!-- <QuizPlay v-else @submit="sendQuiz" /> -->
+          <QuizResults v-if="showResults" :data="results" />
+          <QuizPlay v-else @submit="sendQuiz" />
 
-          <!-- <div v-if="loadingQuizSubmission">saving quiz...</div> -->
+          <div v-if="loadingQuizSubmission">saving quiz...</div>
         </Dialog>
       </div>
     </div>
@@ -50,7 +49,7 @@
 import { getQuiz, storeQuiz } from "~/services/quiz";
 import { useQuizStore } from "~/store/useQuizStore";
 import { useUserStore } from "~/store/useUserStore";
-import type { Choice } from "~/utils/types/quiz";
+import type { Choice, QuizResult } from "~/utils/types/quiz";
 
 const route = useRoute();
 
@@ -95,7 +94,16 @@ const submitQuiz = () => {
   const showResults = ref<boolean>(false);
   const loadingQuizSubmission = ref(false);
 
-  const response = ref();
+  const results = ref<QuizResult>({
+    category: "",
+    difficulty: "easy",
+    owner: "",
+    created_at: "",
+    questions: [],
+    questions_count: 0,
+    quiz_id: 0,
+    title: "",
+  });
 
   const userStore = useUserStore();
 
@@ -104,7 +112,7 @@ const submitQuiz = () => {
       loadingQuizSubmission.value = true;
       const res = await storeQuiz(quizData, quizId, userStore.user?.id);
 
-      response.value = res;
+      results.value = res as QuizResult;
       showResults.value = true;
     } catch (error) {
       console.log(error);
@@ -117,9 +125,9 @@ const submitQuiz = () => {
     showResults,
     loadingQuizSubmission,
     sendQuiz,
-    response,
+    results,
   };
 };
 
-const { showResults, loadingQuizSubmission, sendQuiz, response } = submitQuiz();
+const { showResults, loadingQuizSubmission, sendQuiz, results } = submitQuiz();
 </script>

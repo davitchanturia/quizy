@@ -2,6 +2,7 @@ import type {
   Choice,
   Quiz,
   QuizCategory,
+  QuizResult,
   QuizzesFilters,
 } from "~/utils/types/quiz";
 
@@ -71,7 +72,7 @@ export const storeQuiz = async (
   const CSRF_TOKEN = useCookie("XSRF-TOKEN");
 
   try {
-    const response = await $fetch<Quiz>(
+    const response = await $fetch<QuizResult>(
       `${config.public.API_BASE_URL}/quiz/${quizId}/choices`,
       {
         method: "POST",
@@ -89,7 +90,7 @@ export const storeQuiz = async (
       }
     );
 
-    return response;
+    return response as QuizResult;
   } catch (error) {
     console.error("Failed to store data:", error);
     throw error;

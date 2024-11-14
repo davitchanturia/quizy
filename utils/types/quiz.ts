@@ -49,3 +49,22 @@ export type Choice = {
   answer_id: number | null;
   is_correct: boolean;
 };
+
+export type QuizResult = {
+  category: string;
+  difficulty: QuizDifficulty;
+  owner: string;
+  created_at: string;
+  questions: QuizResultQuestions[];
+  questions_count: number;
+  quiz_id: number;
+  title: string;
+};
+
+export type QuizResultQuestions = {
+  content: string;
+  correct_answer_content: number;
+  is_correct: boolean;
+  question_id: number;
+  user_answer: string | null;
+};
