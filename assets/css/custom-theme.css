@@ -41,6 +41,8 @@
   --highlight-text-color: var(--primary-500);
 
   --p-menu-background: white;
+
+  --chip-success-background: #86efac;
 }
 
 .quizy-dark {
@@ -84,6 +86,8 @@
   /* Special Colors */
   --highlight-bg: #1c2f44; /* Dark mode highlight */
   --highlight-text-color: var(--primary-500);
+
+  --chip-success-background: #16a34a;
 }
 .p-menu {
   background-color: var(--bg-primary) !important;
@@ -192,6 +196,10 @@
 .highlight {
   background-color: var(--highlight-bg) !important;
   color: var(--highlight-text-color) !important;
+}
+
+.chip-success-background {
+  background-color: var(--chip-success-background);
 }
 
 /* primevue component restyles */

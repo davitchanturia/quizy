@@ -97,6 +97,30 @@ export const storeQuiz = async (
   }
 };
 
+export const getQuizResults = async (quizId: string) => {
+  const config = useRuntimeConfig();
+  const CSRF_TOKEN = useCookie("XSRF-TOKEN");
+
+  try {
+    const response = await $fetch<QuizResult>(
+      `${config.public.API_BASE_URL}/quiz/${quizId}/results`,
+      {
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
+        },
+      }
+    );
+
+    return response as QuizResult;
+  } catch (error) {
+    console.error("Failed to get results data:", error);
+    throw error;
+  }
+};
+
 export const getQuizCategories = async () => {
   const config = useRuntimeConfig();
   const CSRF_TOKEN = useCookie("XSRF-TOKEN");

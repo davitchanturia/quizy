@@ -16,6 +16,7 @@
             :title="quiz.title"
             :category="quiz.category.name"
             :difficulty="quiz.difficulty"
+            :is-completed="quiz.is_completed"
           />
         </div>
       </div>

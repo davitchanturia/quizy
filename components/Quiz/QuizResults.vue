@@ -1,11 +1,11 @@
 <template>
-  <div class="w-full h-full px-4">
-    <div class="flex items-center gap-3">
+  <div class="w-full h-full" :class="showHeader ? 'px-4' : ''">
+    <div v-if="showHeader" class="flex items-center gap-3">
       <img :src="fullAvatarUrl" class="w-10 h-10 rounded-full" />
       <div>{{ userStore.user?.name }}</div>
     </div>
 
-    <Divider />
+    <Divider v-if="showHeader" />
 
     <div class="w-full grid grid-cols-1 sm:grid-cols-2">
       <div class="col-span-1 font-bold text-xl">{{ data.title }}</div>
@@ -54,6 +54,10 @@ const { data } = defineProps({
   data: {
     type: Object as PropType<QuizResult>,
     required: true,
+  },
+  showHeader: {
+    type: Boolean,
+    default: true,
   },
 });
 

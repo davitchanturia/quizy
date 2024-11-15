@@ -26,7 +26,22 @@
 
         <div class="w-full mt-8">{{ quiz?.description }}</div>
 
-        <Button class="mt-5" @click="showDialog = true">Stat quiz</Button>
+        <div
+          v-if="quiz?.is_completed || results.is_completed"
+          class="mt-10 flex items-center gap-5"
+        >
+          <Button class="w-64">Try quiz again</Button>
+          <Divider align="center" type="solid">
+            <b>OR</b>
+          </Divider>
+          <Button class="w-64" severity="secondary" @click="showResultsHandler"
+            >View results</Button
+          >
+        </div>
+
+        <Button v-else class="mt-5" @click="showDialog = true"
+          >Stat quiz</Button
+        >
 
         <Dialog
           v-model:visible="showDialog"
@@ -38,7 +53,7 @@
           <QuizResults v-if="showResults" :data="results" />
           <QuizPlay v-else @submit="sendQuiz" />
 
-          <div v-if="loadingQuizSubmission">saving quiz...</div>
+          <div v-if="loadingQuizresults">submitting quiz...</div>
         </Dialog>
       </div>
     </div>
@@ -46,7 +61,7 @@
 </template>
 
 <script lang="ts" setup>
-import { getQuiz, storeQuiz } from "~/services/quiz";
+import { getQuiz, storeQuiz, getQuizResults } from "~/services/quiz";
 import { useQuizStore } from "~/store/useQuizStore";
 import { useUserStore } from "~/store/useUserStore";
 import type { Choice, QuizResult } from "~/utils/types/quiz";
@@ -90,9 +105,9 @@ onMounted(async () => {
 
 const showDialog = ref(false);
 
-const submitQuiz = () => {
+const quizResults = () => {
   const showResults = ref<boolean>(false);
-  const loadingQuizSubmission = ref(false);
+  const loadingQuizresults = ref(false);
 
   const results = ref<QuizResult>({
     category: "",
@@ -103,13 +118,14 @@ const submitQuiz = () => {
     questions_count: 0,
     quiz_id: 0,
     title: "",
+    is_completed: false,
   });
 
   const userStore = useUserStore();
 
   const sendQuiz = async (quizData: Choice[]) => {
     try {
-      loadingQuizSubmission.value = true;
+      loadingQuizresults.value = true;
       const res = await storeQuiz(quizData, quizId, userStore.user?.id);
 
       results.value = res as QuizResult;
@@ -117,17 +133,48 @@ const submitQuiz = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      loadingQuizSubmission.value = false;
+      loadingQuizresults.value = false;
     }
+  };
+
+  const getQuizResultsData = async (): Promise<void> => {
+    try {
+      loadingQuizresults.value = true;
+      const resultsData = await getQuizResults(quizId);
+      results.value = resultsData;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      loadingQuizresults.value = false;
+    }
+  };
+
+  const showResultsHandler = async () => {
+    if (results.value.questions.length !== 0) {
+      showResults.value = true;
+      showDialog.value = true;
+      return;
+    }
+
+    await getQuizResultsData();
+    showResults.value = true;
+    showDialog.value = true;
   };
 
   return {
     showResults,
-    loadingQuizSubmission,
+    loadingQuizresults,
     sendQuiz,
     results,
+    showResultsHandler,
   };
 };
 
-const { showResults, loadingQuizSubmission, sendQuiz, results } = submitQuiz();
+const {
+  showResults,
+  loadingQuizresults,
+  sendQuiz,
+  results,
+  showResultsHandler,
+} = quizResults();
 </script>

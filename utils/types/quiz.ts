@@ -11,6 +11,7 @@ export type Quiz = {
   difficulty: QuizDifficulty;
   createdAt: string;
   updatedAt: string;
+  is_completed: boolean;
 };
 
 export type QuizzesFilters = {
@@ -59,6 +60,7 @@ export type QuizResult = {
   questions_count: number;
   quiz_id: number;
   title: string;
+  is_completed?: boolean;
 };
 
 export type QuizResultQuestions = {
