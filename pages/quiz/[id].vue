@@ -30,7 +30,9 @@
           v-if="quiz?.is_completed || results.is_completed"
           class="mt-10 flex items-center gap-5"
         >
-          <Button class="w-64">Try quiz again</Button>
+          <Button class="w-64" @click="showTryAgainDialog = true"
+            >Try quiz again</Button
+          >
           <Divider align="center" type="solid">
             <b>OR</b>
           </Divider>
@@ -39,21 +41,39 @@
           >
         </div>
 
-        <Button v-else class="mt-5" @click="showDialog = true"
+        <Button v-else class="mt-5" @click="showQuizDialog = true"
           >Stat quiz</Button
         >
 
         <Dialog
-          v-model:visible="showDialog"
+          v-model:visible="showQuizDialog"
           maximizable
           modal
           :style="{ width: '80vw' }"
           :breakpoints="{ '1199px': '80vw', '575px': '90vw' }"
+          @update:visible="closeQuizDialog"
         >
           <QuizResults v-if="showResults" :data="results" />
           <QuizPlay v-else @submit="sendQuiz" />
 
-          <div v-if="loadingQuizresults">submitting quiz...</div>
+          <div v-if="loadingQuizResults">submitting quiz...</div>
+        </Dialog>
+
+        <Dialog
+          v-model:visible="showTryAgainDialog"
+          modal
+          header="Your current results will be reset? Are you sure you want to try again?"
+          :style="{ width: '50vw' }"
+          :breakpoints="{ '1220px': '30vw', '1024px': '50vw', '610px': '90vw' }"
+        >
+          <div class="flex justify-end items-center gap-3">
+            <Button
+              label="cancel"
+              severity="link"
+              @click="showTryAgainDialog = false"
+            />
+            <Button label="Reset" @click="tryQuizAgain" />
+          </div>
         </Dialog>
       </div>
     </div>
@@ -90,24 +110,37 @@ const useQuiz = () => {
     }
   };
 
+  const tryQuizAgain = () => {
+    quizStore.resetChoices();
+    showQuizDialog.value = true;
+    showTryAgainDialog.value = false;
+  };
+
   return {
     quiz,
     loading,
     getQuizData,
+    tryQuizAgain,
   };
 };
 
-const { quiz, loading, getQuizData } = useQuiz();
+const { quiz, loading, getQuizData, tryQuizAgain } = useQuiz();
 
 onMounted(async () => {
   await getQuizData();
 });
 
-const showDialog = ref(false);
+const showQuizDialog = ref(false);
+const showTryAgainDialog = ref(false);
+
+const closeQuizDialog = () => {
+  showQuizDialog.value = false;
+  showResults.value = false;
+};
 
 const quizResults = () => {
   const showResults = ref<boolean>(false);
-  const loadingQuizresults = ref(false);
+  const loadingQuizResults = ref(false);
 
   const results = ref<QuizResult>({
     category: "",
@@ -125,7 +158,7 @@ const quizResults = () => {
 
   const sendQuiz = async (quizData: Choice[]) => {
     try {
-      loadingQuizresults.value = true;
+      loadingQuizResults.value = true;
       const res = await storeQuiz(quizData, quizId, userStore.user?.id);
 
       results.value = res as QuizResult;
@@ -133,37 +166,37 @@ const quizResults = () => {
     } catch (error) {
       console.log(error);
     } finally {
-      loadingQuizresults.value = false;
+      loadingQuizResults.value = false;
     }
   };
 
   const getQuizResultsData = async (): Promise<void> => {
     try {
-      loadingQuizresults.value = true;
+      loadingQuizResults.value = true;
       const resultsData = await getQuizResults(quizId);
       results.value = resultsData;
     } catch (error) {
       console.log(error);
     } finally {
-      loadingQuizresults.value = false;
+      loadingQuizResults.value = false;
     }
   };
 
   const showResultsHandler = async () => {
     if (results.value.questions.length !== 0) {
       showResults.value = true;
-      showDialog.value = true;
+      showQuizDialog.value = true;
       return;
     }
 
     await getQuizResultsData();
     showResults.value = true;
-    showDialog.value = true;
+    showQuizDialog.value = true;
   };
 
   return {
     showResults,
-    loadingQuizresults,
+    loadingQuizResults,
     sendQuiz,
     results,
     showResultsHandler,
@@ -172,7 +205,7 @@ const quizResults = () => {
 
 const {
   showResults,
-  loadingQuizresults,
+  loadingQuizResults,
   sendQuiz,
   results,
   showResultsHandler,
