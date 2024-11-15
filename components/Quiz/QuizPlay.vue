@@ -63,6 +63,7 @@ const answerHandler = (answer: Answer) => {
 
 const submitHandler = () => {
   emit("submit", quizStore.choices);
+  quizStore.resetChoices();
 };
 
 const undoHandler = () => {

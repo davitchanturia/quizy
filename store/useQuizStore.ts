@@ -64,6 +64,10 @@ export const useQuizStore = defineStore("quiz", () => {
     }
   };
 
+  const resetChoices = () => {
+    choices.value = [];
+  };
+
   // Navigation logic
   const undo = (): void => {
     undoQuestion();
@@ -108,6 +112,7 @@ export const useQuizStore = defineStore("quiz", () => {
     currentQuestionIndex,
     currentQuestion,
     choices,
+    resetChoices,
     setChoice,
     currentChoice,
     next,
