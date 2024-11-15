@@ -67,7 +67,7 @@ export const useQuizStore = defineStore("quiz", () => {
   const resetChoices = () => {
     choices.value = [];
     currentQuestionIndex.value = 0;
-    step.value = 0;
+    step.value = 1;
   };
 
   // Navigation logic
