@@ -4,7 +4,7 @@ export type Quiz = {
   id: number;
   title: string;
   description: string;
-  questions: [];
+  questions?: [];
   is_active: boolean;
   owner: User;
   category: QuizCategory;

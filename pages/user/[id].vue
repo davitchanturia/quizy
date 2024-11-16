@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout name="main">
-    <div class="w-full flex gap-4 user-page">
-      <div class="w-64">
+    <div class="w-full grid grid-cols-6 gap-4 user-page">
+      <div class="col-span-1">
         <Card>
           <template #content>
             <Button
@@ -24,14 +24,14 @@
         </Card>
       </div>
 
-      <div class="flex-1">
+      <div class="col-span-5">
         <Tabs v-model:value="activeTab" class="flex-1">
           <TabPanels>
             <TabPanel value="settings">
               <UserSettings />
             </TabPanel>
             <TabPanel value="my-quizes">
-              <p class="m-0">quizes tab</p>
+              <UserQuizzes />
             </TabPanel>
           </TabPanels>
         </Tabs>
