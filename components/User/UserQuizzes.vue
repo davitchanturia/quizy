@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="quizzes.length === 0">You have not created quizzes yet</div>
+
+    <Button class="mt-5" label="Create quiz" />
+
     <Card v-if="quizzes.length > 0" class="w-full">
       <template #content>
         <DataTable
@@ -91,11 +95,6 @@
         </DataTable>
       </template>
     </Card>
-
-    <div v-else>
-      <div>You have not created quizzes yet</div>
-      <Button class="mt-5" label="Create quiz" />
-    </div>
   </div>
 </template>
 
