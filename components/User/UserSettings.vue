@@ -2,8 +2,9 @@
   <Card>
     <template #content>
       <div class="!rounded-full flex justify-center pt-5">
-        <div class="card flex flex-col items-center gap-6">
+        <div class="flex flex-col items-center gap-6">
           <Image
+            v-if="avatarFile || userStore.user?.avatar"
             :src="avatarUrl"
             alt="Image"
             width="250"

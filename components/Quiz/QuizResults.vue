@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full" :class="showHeader ? 'px-4' : ''">
     <div v-if="showHeader" class="flex items-center gap-3">
-      <img :src="fullAvatarUrl" class="w-10 h-10 rounded-full" />
+      <UserAvatar />
       <div>{{ userStore.user?.name }}</div>
     </div>
 
@@ -46,8 +46,8 @@
 <script lang="ts" setup>
 import { useUserStore } from "~/store/useUserStore";
 import type { QuizResult } from "~/utils/types/quiz";
+import UserAvatar from "../base/UserAvatar.vue";
 
-const config = useRuntimeConfig();
 const userStore = useUserStore();
 
 const { data } = defineProps({
@@ -74,6 +74,4 @@ const accuracy = computed(() =>
     (correctAnswersCount.value / data.questions_count) * 100
   ).toString()
 );
-
-const fullAvatarUrl = `${config.public.BACKEND_BASE_URL}/storage/${userStore?.user?.avatar}`;
 </script>

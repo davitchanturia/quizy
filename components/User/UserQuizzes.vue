@@ -4,12 +4,13 @@
       <DataTable
         v-model:editing-rows="editingRows"
         :value="quizzes"
+        striped-rows
         edit-mode="row"
         data-key="id"
         :pt="{
           table: { style: 'min-width: 50rem' },
           column: {
-            bodycell: ({ state }) => ({
+            bodycell: ({ state }: any) => ({
               style:
                 state['d_editing'] &&
                 'padding-top: 0.75rem; padding-bottom: 0.75rem',
@@ -119,7 +120,7 @@ const difficultyOptions = ref([
 
 categoryOptions.value = await getQuizCategories();
 
-const onRowEditSave = (event) => {
+const onRowEditSave = (event: any) => {
   const { newData, index } = event;
 
   quizzes.value[index] = newData;

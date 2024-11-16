@@ -24,7 +24,7 @@
                 class="w-full inline-flex justify-between items-center gap-1 px-4 py-3 secondary-bg"
               >
                 <div>{{ userStore.user?.name }}</div>
-                <img :src="fullAvatarUrl" class="w-10 h-10 rounded-full" />
+                <UserAvatar />
               </div>
             </template>
           </Menu>
@@ -54,9 +54,8 @@
 </template>
 
 <script setup lang="ts">
+import UserAvatar from "~/components/base/UserAvatar.vue";
 import { useUserStore } from "~/store/useUserStore";
-
-const config = useRuntimeConfig();
 
 const { logoutUser } = useAuth();
 
@@ -97,6 +96,4 @@ const menuItems = ref<MenuItem[]>([
 const toggle = (event: any) => {
   menu.value.toggle(event);
 };
-
-const fullAvatarUrl = `${config.public.BACKEND_BASE_URL}/storage/${userStore?.user?.avatar}`;
 </script>
