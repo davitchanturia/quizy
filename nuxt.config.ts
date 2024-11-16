@@ -30,9 +30,12 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/css/custom-theme.css", "primeicons/primeicons.css"],
-  routeRules: {
-    "/": { ssr: true },
-    "/login": { ssr: false },
-    "/register": { ssr: false },
-  },
+  // routeRules: {
+  //   "/": { ssr: true },
+  //   "/login": { ssr: false },
+  //   "/register": { ssr: false },
+  //   "/quiz/**": { ssr: true },
+  //   "/user/**": { ssr: false },
+  // },
+  ssr: false,
 });
