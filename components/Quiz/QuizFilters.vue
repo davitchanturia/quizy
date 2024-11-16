@@ -6,6 +6,7 @@
           <div class="flex justify-between items-center">
             <h3 class="text-xl font-bold">Filters</h3>
             <Button
+              v-if="!hideClearButton"
               label="Clear"
               class="p-button-text !text-xs"
               size="small"
@@ -69,7 +70,10 @@
 <script setup lang="ts">
 import { getQuizCategories } from "~/services/quiz";
 
-const { filters } = defineProps(["filters"]);
+const { filters, hideClearButton } = defineProps([
+  "filters",
+  "hideClearButton",
+]);
 
 const emit = defineEmits<{
   (e: "resetFilters"): void;

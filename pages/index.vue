@@ -2,7 +2,12 @@
   <NuxtLayout name="main">
     <div class="w-full flex gap-4">
       <QuizFiltersSkeleton v-if="showFiltersSkeleton" />
-      <QuizFilters v-else :filters @reset-filters="resetFilters" />
+      <QuizFilters
+        v-else
+        :filters
+        :hide-clear-button="filtersAreInitial"
+        @reset-filters="resetFilters"
+      />
 
       <div class="flex-1">
         <div v-if="loading" class="flex flex-wrap gap-5">
