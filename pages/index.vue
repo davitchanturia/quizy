@@ -19,7 +19,7 @@
             :id="quiz.id"
             :key="quiz.id"
             :title="quiz.title"
-            :category="quiz.category.name"
+            :category="quiz.category?.name"
             :difficulty="quiz.difficulty"
             :is-completed="quiz.is_completed"
           />

@@ -33,9 +33,8 @@
           <Column field="category" header="Category">
             <template #editor="{ data, field }">
               <Select
-                v-model="data[field].name"
+                v-model="data[field]"
                 :options="categoryOptions"
-                option-value="name"
                 option-label="name"
                 placeholder="Select a Status"
                 fluid
@@ -100,7 +99,7 @@
 
 <script setup lang="ts">
 import { getUserQuizzes } from "~/services/user";
-import { getQuizCategories } from "~/services/quiz";
+import { getQuizCategories, updateQuiz } from "~/services/quiz";
 import type { Quiz } from "~/utils/types/quiz";
 import { useUserStore } from "~/store/useUserStore";
 
@@ -126,11 +125,21 @@ const difficultyOptions = ref([
 
 categoryOptions.value = await getQuizCategories();
 
-const onRowEditSave = (event: any) => {
+const onRowEditSave = async (event: any) => {
   const { newData, index } = event;
 
   quizzes.value[index] = newData;
 
-  //TODO: send updated quizzes to backend
+  const { id, title, category, is_active, difficulty } = quizzes.value[index];
+
+  const updatedQuiz = {
+    id,
+    title,
+    category_id: category?.id,
+    is_active,
+    difficulty,
+  };
+
+  await updateQuiz(updatedQuiz);
 };
 </script>

@@ -144,3 +144,34 @@ export const getQuizCategories = async () => {
     throw error;
   }
 };
+
+export const updateQuiz = async (quiz: Quiz) => {
+  const config = useRuntimeConfig();
+  const CSRF_TOKEN = useCookie("XSRF-TOKEN");
+
+  try {
+    const response = await $fetch<Quiz>(
+      `${config.public.API_BASE_URL}/quizzes/${quiz.id}`,
+      {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
+        },
+        body: {
+          title: quiz.title,
+          category_id: quiz.category_id,
+          difficulty: quiz.difficulty,
+          is_active: quiz.is_active,
+        },
+      }
+    );
+
+    return response as Quiz;
+  } catch (error) {
+    console.error("Failed to update data:", error);
+    throw error;
+  }
+};

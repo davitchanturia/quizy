@@ -3,15 +3,16 @@ import type { User } from "./auth";
 export type Quiz = {
   id: number;
   title: string;
-  description: string;
+  description?: string;
   questions?: [];
   is_active: boolean;
-  owner: User;
-  category: QuizCategory;
+  owner?: User;
+  category?: QuizCategory;
+  category_id?: number;
   difficulty: QuizDifficulty;
-  createdAt: string;
-  updatedAt: string;
-  is_completed: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+  is_completed?: boolean;
 };
 
 export type QuizzesFilters = {
