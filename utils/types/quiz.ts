@@ -22,6 +22,7 @@ export type QuizzesFilters = {
 };
 
 export type QuizCategory = {
+  id?: number;
   name: string;
 };
 
@@ -70,4 +71,11 @@ export type QuizResultQuestions = {
   is_correct: boolean;
   question_id: number;
   user_answer: string | null;
+};
+
+export type QuizDetails = {
+  category: string;
+  difficulty: QuizDifficulty;
+  title: string;
+  description: string;
 };

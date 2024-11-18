@@ -2,9 +2,9 @@
   <div>
     <div v-if="quizzes.length === 0">You have not created quizzes yet</div>
 
-    <Button class="mt-5" label="Create quiz" />
+    <UserCreateQuizDialog />
 
-    <Card v-if="quizzes.length > 0" class="w-full">
+    <Card v-if="quizzes.length > 0" class="w-full mt-7">
       <template #content>
         <DataTable
           v-model:editing-rows="editingRows"
