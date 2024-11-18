@@ -79,3 +79,13 @@ export type QuizDetails = {
   title: string;
   description: string;
 };
+
+export type QuizQuestion = {
+  content: string;
+  answers: QuizQuestionAnswer[];
+};
+
+export type QuizQuestionAnswer = {
+  content: string;
+  is_correct: boolean;
+};

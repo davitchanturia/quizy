@@ -30,7 +30,7 @@
             </StepPanel>
 
             <StepPanel v-slot="{ activateCallback }" value="2">
-              Content goes here
+              <UserCreateQuizQuestions></UserCreateQuizQuestions>
 
               <div class="flex pt-6 justify-between">
                 <Button
