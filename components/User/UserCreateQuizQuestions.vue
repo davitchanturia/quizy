@@ -8,7 +8,21 @@
       <!-- question -->
       <div class="flex items-center gap-3">
         <div class="text-2xl">{{ questionIndex + 1 }}.</div>
-        <InputText v-model="question.content" type="text" fluid />
+        <div class="w-full">
+          <InputText
+            v-model="question.content"
+            type="text"
+            fluid
+            name="question"
+          />
+          <!-- <Message
+            v-if="$form.question?.invalid"
+            severity="error"
+            size="small"
+            variant="simple"
+            >{{ $form.question.error?.message }}</Message
+          > -->
+        </div>
         <Button
           icon="pi pi-trash"
           aria-label="Save"
@@ -18,14 +32,31 @@
       </div>
 
       <!-- answers -->
-      <div class="mt-7">
+      <div v-if="question.answers?.length > 0" class="mt-7">
         <div
           v-for="(answer, answerIndex) in question.answers"
           :key="answerIndex"
           class="flex items-center justify-between gap-3 mt-3 pl-9"
         >
-          <RadioButton v-model="answer.is_correct" name="question" />
-          <InputText v-model="answer.content" type="text" fluid />
+          <input
+            type="radio"
+            :name="'question' + questionIndex"
+            @change="markCorrectAnswer(questionIndex, answerIndex)"
+          />
+
+          <InputText
+            v-model="answer.content"
+            type="text"
+            fluid
+            :name="'answer' + questionIndex"
+          />
+          <!-- <Message
+            v-if="$form.answer?.invalid"
+            severity="error"
+            size="small"
+            variant="simple"
+            >{{ $form.answer.error?.message }}</Message
+          > -->
           <Button
             icon="pi pi-trash"
             aria-label="Save"
@@ -61,9 +92,11 @@
 <script lang="ts" setup>
 const {
   questions,
+  initialQuestions,
   addNewQuestion,
   removeQuestion,
   addNewAnswer,
   removeAnswer,
+  markCorrectAnswer,
 } = useQuizCreation();
 </script>
