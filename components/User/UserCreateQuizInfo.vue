@@ -104,12 +104,13 @@
 <script lang="ts" setup>
 import { yupResolver } from "@primevue/forms/resolvers/yup";
 import { getQuizCategories } from "~/services/quiz";
+import { useQuizCreateStore } from "~/store/useQuizCreateStore";
 import type { QuizDetails } from "~/utils/types/quiz";
 import { quizDetailsSchema } from "~/utils/validationRules/quiz";
 
 const resolver = yupResolver(quizDetailsSchema);
 
-const { setQuizDetails, initialQuizDetails } = useQuizCreation();
+const { setQuizDetails, initialQuizDetails } = useQuizCreateStore();
 
 const submitHandler = (event: any) => {
   setQuizDetails(event.values as QuizDetails);

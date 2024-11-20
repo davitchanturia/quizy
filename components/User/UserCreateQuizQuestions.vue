@@ -90,13 +90,14 @@
 </template>
 
 <script lang="ts" setup>
+import { useQuizCreateStore } from "~/store/useQuizCreateStore";
+
 const {
   questions,
-  initialQuestions,
   addNewQuestion,
   removeQuestion,
   addNewAnswer,
   removeAnswer,
   markCorrectAnswer,
-} = useQuizCreation();
+} = useQuizCreateStore();
 </script>

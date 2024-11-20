@@ -4,8 +4,10 @@ import type {
   QuizQuestion,
   QuizQuestionAnswer,
 } from "~/utils/types/quiz";
+import { defineStore } from "pinia";
+import { ref } from "vue";
 
-export const useQuizCreation = () => {
+export const useQuizCreateStore = defineStore("quiz", () => {
   const initialQuizDetails: QuizDetails = {
     title: "",
     description: "",
@@ -34,18 +36,8 @@ export const useQuizCreation = () => {
 
   const questions = ref<QuizQuestion[]>(initialQuestions);
 
-  watch(
-    questions,
-    () => {
-      console.log("updated questions", questions.value);
-    },
-    { deep: true }
-  );
-
   const addNewQuestion = (): void => {
     questions.value.push(JSON.parse(JSON.stringify(questionTemplate)));
-
-    // questions.value = [...questions.value, questionTemplate];
   };
 
   const removeQuestion = (index: number): void => {
@@ -57,16 +49,9 @@ export const useQuizCreation = () => {
     const answers = questions.value[questionIndex].answers;
     if (answers.length >= 6) return;
 
-    // questions.value[questionIndex].answers = [
-    //   ...answers,
-    //   JSON.parse(JSON.stringify(answerTemplate)),
-    // ];
-
     questions.value[questionIndex].answers.push(
       JSON.parse(JSON.stringify(answerTemplate))
     );
-
-    // answers.push(answerTemplate);
   };
 
   const removeAnswer = (questionIndex: number, answerIndex: number): void => {
@@ -93,4 +78,4 @@ export const useQuizCreation = () => {
     removeAnswer,
     markCorrectAnswer,
   };
-};
+});
