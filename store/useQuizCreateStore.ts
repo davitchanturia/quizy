@@ -22,14 +22,15 @@ export const useQuizCreateStore = defineStore("quiz", () => {
   };
 
   //questions
-  const questionTemplate: QuizQuestion = {
-    content: "",
-    answers: [],
-  };
 
   const answerTemplate: QuizQuestionAnswer = {
     content: "",
     is_correct: false,
+  };
+
+  const questionTemplate: QuizQuestion = {
+    content: "",
+    answers: [answerTemplate, answerTemplate],
   };
 
   const initialQuestions: QuizQuestion[] = [];
@@ -41,7 +42,7 @@ export const useQuizCreateStore = defineStore("quiz", () => {
   };
 
   const removeQuestion = (index: number): void => {
-    if (questions.value.length <= 1) return;
+    // if (questions.value.length <= 1) return;
     questions.value.splice(index, 1);
   };
 

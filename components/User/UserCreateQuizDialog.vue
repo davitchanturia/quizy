@@ -30,22 +30,23 @@
             </StepPanel>
 
             <StepPanel v-slot="{ activateCallback }" value="2">
-              <UserCreateQuizQuestions></UserCreateQuizQuestions>
-
-              <div class="flex pt-6 justify-between">
-                <Button
-                  label="Back"
-                  severity="secondary"
-                  icon="pi pi-arrow-left"
-                  @click="activateCallback('1')"
-                />
-                <Button
-                  label="Next"
-                  icon="pi pi-arrow-right"
-                  icon-pos="right"
-                  @click="activateCallback('3')"
-                />
-              </div>
+              <UserCreateQuizQuestions>
+                <template #actions="{ disableNextButton }">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    @click="activateCallback('1')"
+                  />
+                  <Button
+                    label="Next"
+                    icon="pi pi-arrow-right"
+                    icon-pos="right"
+                    :disabled="disableNextButton"
+                    @click="activateCallback('3')"
+                  />
+                </template>
+              </UserCreateQuizQuestions>
             </StepPanel>
             <StepPanel v-slot="{ activateCallback }" value="3">
               Content goes here
