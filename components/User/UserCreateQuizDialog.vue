@@ -12,7 +12,7 @@
           <StepList>
             <Step value="1">Quiz Details</Step>
             <Step value="2">Questions</Step>
-            <Step value="3">Overview</Step>
+            <Step value="3">Review</Step>
           </StepList>
           <StepPanels>
             <StepPanel v-slot="{ activateCallback }" value="1">
@@ -50,14 +50,20 @@
               </UserCreateQuizQuestions>
             </StepPanel>
             <StepPanel v-slot="{ activateCallback }" value="3">
-              Content goes here
+              <UserCreateQuizReview />
 
-              <div class="pt-6">
+              <div class="flex pt-6 justify-between">
                 <Button
                   label="Back"
                   severity="secondary"
                   icon="pi pi-arrow-left"
                   @click="activateCallback('2')"
+                />
+
+                <Button
+                  label="Create"
+                  icon-pos="right"
+                  @click="activateCallback('3')"
                 />
               </div>
             </StepPanel>
@@ -69,5 +75,7 @@
 </template>
 
 <script setup lang="ts">
+import UserCreateQuizReview from "./UserCreateQuizReview.vue";
+
 const showCreateDialog = ref(false);
 </script>

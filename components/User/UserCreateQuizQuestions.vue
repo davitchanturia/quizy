@@ -4,7 +4,6 @@
     :validate-on-value-update="false"
     :validate-on-blur="true"
   >
-    {{ formIsValid }}
     <div
       v-for="(question, questionIndex) in questions"
       :key="questionIndex"
