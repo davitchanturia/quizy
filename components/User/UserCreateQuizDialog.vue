@@ -42,6 +42,7 @@
                     label="Next"
                     icon="pi pi-arrow-right"
                     icon-pos="right"
+                    type="submit"
                     :disabled="disableNextButton"
                     @click="activateCallback('3')"
                   />

@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <Button @click="validate">validate</Button>
-    <Form
+  <Form
+    :resolver="validate"
+    :validate-on-value-update="false"
+    :validate-on-blur="true"
+  >
+    {{ formIsValid }}
+    <div
       v-for="(question, questionIndex) in questions"
       :key="questionIndex"
       class="mt-5"
-      :resolver="validate"
-      :validate-on-value-update="false"
-      :validate-on-blur="true"
     >
       <!-- question -->
       <div class="flex items-center gap-3">
@@ -91,7 +92,7 @@
           @click="addNewAnswer(questionIndex)"
         />
       </div>
-    </Form>
+    </div>
 
     <Button
       icon="pi pi-plus"
@@ -99,13 +100,16 @@
       class="!w-full mt-7"
       severity="secondary"
       label="Question"
-      @click="addNewQuestion"
+      @click="addNewQuestionHandler"
     />
 
     <div class="flex pt-6 justify-between">
-      <slot name="actions" :disable-next-button="true"></slot>
+      <slot
+        name="actions"
+        :disable-next-button="!formIsValid || questions.length === 0"
+      ></slot>
     </div>
-  </div>
+  </Form>
 </template>
 
 <script lang="ts" setup>
@@ -120,5 +124,10 @@ const {
   markCorrectAnswer,
 } = useQuizCreateStore();
 
-const { errors, validate } = useQuizValidation(toRef(questions));
+const { errors, validate, formIsValid } = useQuizValidation(toRef(questions));
+
+const addNewQuestionHandler = () => {
+  addNewQuestion();
+  formIsValid.value = false;
+};
 </script>

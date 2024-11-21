@@ -113,6 +113,7 @@ const resolver = yupResolver(quizDetailsSchema);
 const { setQuizDetails, initialQuizDetails } = useQuizCreateStore();
 
 const submitHandler = (event: any) => {
+  console.log(event.values);
   setQuizDetails(event.values as QuizDetails);
 };
 

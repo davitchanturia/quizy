@@ -89,3 +89,8 @@ export type QuizQuestionAnswer = {
   content: string;
   is_correct: boolean;
 };
+
+export type QuizQuestionError = {
+  question: string[];
+  answers: string[];
+};

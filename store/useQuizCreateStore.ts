@@ -42,7 +42,6 @@ export const useQuizCreateStore = defineStore("quiz", () => {
   };
 
   const removeQuestion = (index: number): void => {
-    // if (questions.value.length <= 1) return;
     questions.value.splice(index, 1);
   };
 

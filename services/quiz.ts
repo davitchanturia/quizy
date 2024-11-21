@@ -175,3 +175,29 @@ export const updateQuiz = async (quiz: Quiz) => {
     throw error;
   }
 };
+
+export const createQuiz = async (quiz: Quiz) => {
+  const config = useRuntimeConfig();
+  const CSRF_TOKEN = useCookie("XSRF-TOKEN");
+
+  try {
+    const response = await $fetch<Quiz>(
+      `${config.public.API_BASE_URL}/quiz/create`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
+        },
+        body: quiz,
+      }
+    );
+
+    return response as Quiz;
+  } catch (error) {
+    console.error("Failed to update data:", error);
+    throw error;
+  }
+};

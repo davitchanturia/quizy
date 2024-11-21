@@ -1,6 +1,6 @@
-import type { QuizQuestion } from "~/utils/types/quiz";
+import type { QuizQuestion, QuizQuestionError } from "~/utils/types/quiz";
 
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useDebounceFn } from "@vueuse/core";
 import { quizQuestionsSchema } from "~/utils/validationRules/quiz";
 
@@ -11,31 +11,29 @@ const extractIndex = (value: string): string | null => {
 };
 
 export const useQuizValidation = (questions: Ref<QuizQuestion[]>) => {
-  const errors = ref<
-    {
-      question: string[];
-      answers: string[];
-    }[]
-  >([]);
+  const errors = ref<QuizQuestionError[]>([]);
+
+  const formIsValid = ref(false);
 
   const generateErrorStructure = (): void => {
     errors.value = questions.value.map((question) => ({
       question: [],
-      //   answers: [],
       answers: question.answers.map(() => ""),
     }));
   };
 
   const validate = useDebounceFn(async (): Promise<void> => {
     try {
-      // Reset errors before validation
       generateErrorStructure();
 
-      // Run Yup validation
       await quizQuestionsSchema.validate(questions.value, {
         abortEarly: false,
       });
+
+      formIsValid.value = true;
     } catch (validationError: any) {
+      formIsValid.value = false;
+
       if (validationError.inner) {
         validationError.inner.forEach((error: any) => {
           const path = error.path.split(".");
@@ -65,5 +63,6 @@ export const useQuizValidation = (questions: Ref<QuizQuestion[]>) => {
   return {
     validate,
     errors,
+    formIsValid,
   };
 };
