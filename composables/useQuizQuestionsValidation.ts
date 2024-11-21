@@ -12,7 +12,6 @@ const extractIndex = (value: string): string | null => {
 
 export const useQuizValidation = (questions: Ref<QuizQuestion[]>) => {
   const errors = ref<QuizQuestionError[]>([]);
-
   const formIsValid = ref(false);
 
   const generateErrorStructure = (): void => {

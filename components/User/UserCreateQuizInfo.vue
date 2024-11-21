@@ -1,15 +1,14 @@
 <template>
   <div class="mt-5">
     <Form
-      v-slot="$form"
       :resolver
-      :initial-values="initialQuizDetails"
+      :initial-values="quizCreateStore.initialQuizDetails"
       :validate-on-blur="true"
       class="mt-4"
-      @submit="submitHandler"
     >
       <FormField v-slot="$field" name="title" class="flex flex-col gap-1">
         <InputText
+          v-model="quizCreateStore.quizDetails.title"
           type="text"
           name="title"
           placeholder="Title"
@@ -30,6 +29,7 @@
         class="flex flex-col gap-1 mt-4"
       >
         <Textarea
+          v-model="quizCreateStore.quizDetails.description"
           rows="5"
           cols="30"
           class="!bg-transparent w-full !text-gray-600"
@@ -52,6 +52,7 @@
           class="flex flex-col gap-1 mt-4"
         >
           <Select
+            v-model="quizCreateStore.quizDetails.category"
             name="category"
             :options="categoryOptions"
             option-label="name"
@@ -76,6 +77,7 @@
           class="flex flex-col gap-1 mt-4"
         >
           <Select
+            v-model="quizCreateStore.quizDetails.difficulty"
             name="difficulty"
             :options="difficultyOptions"
             option-label="name"
@@ -95,7 +97,10 @@
       </div>
 
       <div class="flex pt-6 justify-end">
-        <slot name="actions" :disable-next-button="!$form.valid"></slot>
+        <slot
+          name="actions"
+          :disable-next-button="!quizCreateStore.quizDetailsAreValid"
+        ></slot>
       </div>
     </Form>
   </div>
@@ -105,17 +110,11 @@
 import { yupResolver } from "@primevue/forms/resolvers/yup";
 import { getQuizCategories } from "~/services/quiz";
 import { useQuizCreateStore } from "~/store/useQuizCreateStore";
-import type { QuizDetails } from "~/utils/types/quiz";
 import { quizDetailsSchema } from "~/utils/validationRules/quiz";
 
 const resolver = yupResolver(quizDetailsSchema);
 
-const { setQuizDetails, initialQuizDetails } = useQuizCreateStore();
-
-const submitHandler = (event: any) => {
-  console.log(event.values);
-  setQuizDetails(event.values as QuizDetails);
-};
+const quizCreateStore = useQuizCreateStore();
 
 const categoryOptions = ref();
 const difficultyOptions = [

@@ -86,6 +86,7 @@
 <script lang="ts" setup>
 import { getQuiz } from "~/services/quiz";
 import { useQuizStore } from "~/store/useQuizStore";
+import type { Question } from "~/utils/types/quiz";
 
 const route = useRoute();
 const quizId = route.params.id as string;
@@ -102,7 +103,7 @@ const useQuiz = () => {
       const quizData = await getQuiz(quizId);
 
       quiz.value = quizData;
-      quizStore.setQuestions(quizData.questions);
+      quizStore.setQuestions(quizData.questions as Question[]);
     } catch (error) {
       console.log(error);
     } finally {

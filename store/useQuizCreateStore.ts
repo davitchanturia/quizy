@@ -1,28 +1,32 @@
 import type {
-  Question,
   QuizDetails,
   QuizQuestion,
   QuizQuestionAnswer,
 } from "~/utils/types/quiz";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 export const useQuizCreateStore = defineStore("quiz", () => {
   const initialQuizDetails: QuizDetails = {
     title: "",
     description: "",
     category: "",
-    difficulty: "easy",
+    difficulty: "",
   };
 
   const quizDetails = ref<QuizDetails>(initialQuizDetails);
 
-  const setQuizDetails = (details: QuizDetails): void => {
-    quizDetails.value = details;
-  };
+  const quizDetailsAreValid = computed(() => {
+    return (
+      quizDetails.value.title.trim() !== "" &&
+      quizDetails.value.description.trim() !== "" &&
+      typeof quizDetails.value.category === "number" &&
+      quizDetails.value.category > 0 &&
+      ["easy", "medium", "hard"].includes(quizDetails.value.difficulty)
+    );
+  });
 
   //questions
-
   const answerTemplate: QuizQuestionAnswer = {
     content: "",
     is_correct: false,
@@ -69,7 +73,7 @@ export const useQuizCreateStore = defineStore("quiz", () => {
   return {
     initialQuizDetails,
     quizDetails,
-    setQuizDetails,
+    quizDetailsAreValid,
     questions,
     initialQuestions,
     addNewQuestion,

@@ -26,7 +26,7 @@ export type QuizCategory = {
   name: string;
 };
 
-export type QuizDifficulty = "easy" | "medium" | "hard";
+export type QuizDifficulty = "easy" | "medium" | "hard" | "";
 
 export type Question = {
   id: number;
@@ -74,7 +74,7 @@ export type QuizResultQuestions = {
 };
 
 export type QuizDetails = {
-  category: string;
+  category: string | number | undefined;
   difficulty: QuizDifficulty;
   title: string;
   description: string;
