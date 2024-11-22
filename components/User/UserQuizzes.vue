@@ -14,7 +14,6 @@
       />
     </div>
 
-    {{ selectAll }}
     <Card v-if="quizzes.length > 0" class="w-full mt-7">
       <template #content>
         <DataTable
