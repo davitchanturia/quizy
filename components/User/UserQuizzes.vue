@@ -2,12 +2,24 @@
   <div>
     <div v-if="quizzes.length === 0">You have not created quizzes yet</div>
 
-    <UserCreateQuizDialog @quiz-created="updateQuizzesHandler" />
+    <div class="flex items-center gap-3">
+      <UserCreateQuizDialog @quiz-created="updateQuizzesHandler" />
+      <Button
+        v-if="selectedQuizzes.length > 0"
+        icon="pi pi-trash"
+        variant="text"
+        label="Delete quizzes"
+        severity="secondary"
+        @click="deleteQuizzesHandler"
+      />
+    </div>
 
+    {{ selectAll }}
     <Card v-if="quizzes.length > 0" class="w-full mt-7">
       <template #content>
         <DataTable
           v-model:editing-rows="editingRows"
+          v-model:selection="selectedQuizzes"
           :value="quizzes"
           striped-rows
           edit-mode="row"
@@ -22,8 +34,12 @@
               }),
             },
           }"
+          @row-select-all="selectAll = true"
+          @row-unselect-all="selectAll = false"
           @row-edit-save="onRowEditSave"
         >
+          <Column selection-mode="multiple" header-style="width: 3rem"></Column>
+
           <Column field="title" header="Title">
             <template #editor="{ data, field }">
               <InputText v-model="data[field]" fluid />
@@ -99,7 +115,7 @@
 
 <script setup lang="ts">
 import { getUserQuizzes } from "~/services/user";
-import { getQuizCategories, updateQuiz } from "~/services/quiz";
+import { deleteQuizzes, getQuizCategories, updateQuiz } from "~/services/quiz";
 import type { Quiz } from "~/utils/types/quiz";
 import { useUserStore } from "~/store/useUserStore";
 
@@ -119,6 +135,19 @@ try {
 }
 
 const editingRows = ref([]);
+const selectedQuizzes = ref([]);
+const selectAll = ref(false);
+
+watch(selectedQuizzes, () => {
+  console.log(selectedQuizzes.value.length);
+});
+
+const deleteQuizzesHandler = async () => {
+  const ids = selectedQuizzes.value.map((quiz) => quiz?.id);
+
+  await deleteQuizzes(ids, selectAll.value);
+};
+
 const categoryOptions = ref();
 
 const difficultyOptions = ref([

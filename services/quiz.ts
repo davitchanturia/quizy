@@ -206,3 +206,36 @@ export const createQuiz = async (quiz: {
     throw error;
   }
 };
+
+export const deleteQuizzes = async (quizIds: number[], all: boolean) => {
+  const config = useRuntimeConfig();
+  const CSRF_TOKEN = useCookie("XSRF-TOKEN");
+
+  try {
+    const queryParams = all ? "?all=true" : "";
+
+    const options: RequestInit = {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
+      },
+    };
+
+    if (!all && quizIds.length > 0) {
+      options.body = JSON.stringify({
+        ids: quizIds,
+      });
+    }
+
+    await $fetch(
+      `${config.public.API_BASE_URL}/quiz/delete${queryParams}`,
+      options
+    );
+  } catch (error) {
+    console.error("Failed to delete quiz:", error);
+    throw error;
+  }
+};
