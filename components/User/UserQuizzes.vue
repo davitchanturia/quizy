@@ -2,7 +2,7 @@
   <div>
     <div v-if="quizzes.length === 0">You have not created quizzes yet</div>
 
-    <UserCreateQuizDialog />
+    <UserCreateQuizDialog @quiz-created="updateQuizzesHandler" />
 
     <Card v-if="quizzes.length > 0" class="w-full mt-7">
       <template #content>
@@ -104,6 +104,10 @@ import type { Quiz } from "~/utils/types/quiz";
 import { useUserStore } from "~/store/useUserStore";
 
 const quizzes = ref<Quiz[]>([]);
+
+const updateQuizzesHandler = async (newQuiz: Quiz) => {
+  quizzes.value.push(newQuiz);
+};
 
 const userStore = useUserStore();
 

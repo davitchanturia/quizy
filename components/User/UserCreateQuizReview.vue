@@ -52,6 +52,8 @@
         </AccordionPanel>
       </Accordion>
     </div>
+
+    <slot />
   </div>
 </template>
 

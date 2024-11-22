@@ -2,6 +2,8 @@ import type {
   Choice,
   Quiz,
   QuizCategory,
+  QuizDetails,
+  QuizQuestion,
   QuizResult,
   QuizzesFilters,
 } from "~/utils/types/quiz";
@@ -176,7 +178,10 @@ export const updateQuiz = async (quiz: Quiz) => {
   }
 };
 
-export const createQuiz = async (quiz: Quiz) => {
+export const createQuiz = async (quiz: {
+  info: QuizDetails;
+  questions: QuizQuestion[];
+}) => {
   const config = useRuntimeConfig();
   const CSRF_TOKEN = useCookie("XSRF-TOKEN");
 

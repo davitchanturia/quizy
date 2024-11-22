@@ -50,22 +50,22 @@
               </UserCreateQuizQuestions>
             </StepPanel>
             <StepPanel v-slot="{ activateCallback }" value="3">
-              <UserCreateQuizReview />
+              <UserCreateQuizReview>
+                <div class="flex pt-6 justify-between">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    @click="activateCallback('2')"
+                  />
 
-              <div class="flex pt-6 justify-between">
-                <Button
-                  label="Back"
-                  severity="secondary"
-                  icon="pi pi-arrow-left"
-                  @click="activateCallback('2')"
-                />
-
-                <Button
-                  label="Create"
-                  icon-pos="right"
-                  @click="activateCallback('3')"
-                />
-              </div>
+                  <Button
+                    label="Create"
+                    icon-pos="right"
+                    @click="createNewQuiz"
+                  />
+                </div>
+              </UserCreateQuizReview>
             </StepPanel>
           </StepPanels>
         </Stepper>
@@ -75,7 +75,32 @@
 </template>
 
 <script setup lang="ts">
+import { useQuizCreateStore } from "~/store/useQuizCreateStore";
 import UserCreateQuizReview from "./UserCreateQuizReview.vue";
+import { createQuiz } from "~/services/quiz";
+import type { Quiz } from "~/utils/types/quiz";
+
+const emit = defineEmits<{
+  (e: "quizCreated", quiz: Quiz): void;
+}>();
 
 const showCreateDialog = ref(false);
+
+const quizCreateStore = useQuizCreateStore();
+
+const createNewQuiz = async () => {
+  const newQuiz = {
+    info: quizCreateStore.quizDetails,
+    questions: quizCreateStore.questions,
+  };
+
+  try {
+    const createdQuiz = await createQuiz(newQuiz);
+
+    emit("quizCreated", createdQuiz);
+    showCreateDialog.value = false;
+  } catch (error) {
+    console.log(error);
+  }
+};
 </script>

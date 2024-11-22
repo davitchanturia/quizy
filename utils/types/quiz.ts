@@ -1,7 +1,7 @@
 import type { User } from "./auth";
 
 export type Quiz = {
-  id: number;
+  id?: number;
   title: string;
   description?: string;
   questions?: [];
