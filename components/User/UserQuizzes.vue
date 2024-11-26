@@ -99,6 +99,17 @@
             </template>
           </Column>
 
+          <Column field="questionsData" header="Questions">
+            <template #body="slotProps">
+              <Button
+                severity="secondary"
+                class="text-sm"
+                @click="openQuestionsDialog(slotProps.data.id)"
+                >Open</Button
+              >
+            </template>
+          </Column>
+
           <Column field="created_at" header="Created at"></Column>
 
           <Column
@@ -109,6 +120,10 @@
         </DataTable>
       </template>
     </Card>
+    <UserEditQuizQuestionsDialog
+      v-model="showEditQuestionsDialog"
+      :questions="selectedQuestions"
+    />
   </div>
 </template>
 
@@ -136,10 +151,6 @@ try {
 const editingRows = ref([]);
 const selectedQuizzes = ref([]);
 const selectAll = ref(false);
-
-watch(selectedQuizzes, () => {
-  console.log(selectedQuizzes.value.length);
-});
 
 const deleteQuizzesHandler = async () => {
   const ids = selectedQuizzes.value.map((quiz) => quiz?.id);
@@ -173,5 +184,14 @@ const onRowEditSave = async (event: any) => {
   };
 
   await updateQuiz(updatedQuiz);
+};
+
+const showEditQuestionsDialog = ref(false);
+const selectedQuestions = ref([]);
+
+const openQuestionsDialog = (id: number) => {
+  selectedQuestions.value =
+    quizzes.value.find((quiz) => quiz.id === id)?.questions || [];
+  showEditQuestionsDialog.value = true;
 };
 </script>
