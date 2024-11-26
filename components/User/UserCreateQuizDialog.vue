@@ -31,7 +31,7 @@
 
             <StepPanel v-slot="{ activateCallback }" value="2">
               <UserCreateQuizQuestions>
-                <template #actions="{ disableNextButton }">
+                <template #default="{ disableNextButton }">
                   <Button
                     label="Back"
                     severity="secondary"

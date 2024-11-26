@@ -1,118 +1,21 @@
 <template>
-  <Form
-    :resolver="validate"
-    :validate-on-value-update="false"
-    :validate-on-blur="true"
+  <SharedQuizQuestionsForm
+    :questions="questions"
+    @add-new-question="addNewQuestion"
+    @mark-correct-answer="markCorrectAnswer"
+    @remove-question="removeQuestion"
+    @add-new-answer="addNewAnswer"
+    @remove-answer="removeAnswer"
   >
-    <div
-      v-for="(question, questionIndex) in questions"
-      :key="questionIndex"
-      class="mt-5"
-    >
-      <!-- question -->
-      <div class="flex items-center gap-3">
-        <div class="text-2xl">{{ questionIndex + 1 }}.</div>
-        <div class="w-full">
-          <InputText
-            v-model="question.content"
-            type="text"
-            fluid
-            name="question"
-          />
-        </div>
-        <Button
-          icon="pi pi-trash"
-          aria-label="Save"
-          severity="secondary"
-          @click="removeQuestion(questionIndex)"
-        />
-      </div>
-
-      <div v-if="errors[questionIndex]?.question.length > 0" class="pl-9 mt-1">
-        <Message
-          v-for="(error, errorIndex) in errors[questionIndex]?.question"
-          :key="errorIndex"
-          severity="error"
-          size="small"
-          variant="simple"
-          >{{ error }}</Message
-        >
-      </div>
-
-      <!-- answers -->
-      <div v-if="question.answers?.length > 0" class="mt-7">
-        <div
-          v-for="(answer, answerIndex) in question.answers"
-          :key="answerIndex"
-          class="mt-3 pl-9"
-        >
-          <div class="flex items-center justify-between gap-3">
-            <RadioButton
-              v-model="answer.is_correct"
-              :input-id="questionIndex.toString()"
-              name="dynamic"
-              :value="true"
-              :form-control="{ validateOnValueUpdate: true }"
-              @change="markCorrectAnswer(questionIndex, answerIndex)"
-            />
-
-            <InputText
-              v-model="answer.content"
-              type="text"
-              fluid
-              :name="'answer' + questionIndex"
-            />
-            <Button
-              icon="pi pi-trash"
-              aria-label="Save"
-              severity="secondary"
-              @click="removeAnswer(questionIndex, answerIndex)"
-            />
-          </div>
-
-          <Message
-            v-if="errors[questionIndex]?.answers.length > 0"
-            severity="error"
-            size="small"
-            variant="simple"
-            class="pl-7 mt-1"
-            >{{ errors[questionIndex].answers[answerIndex] }}</Message
-          >
-        </div>
-      </div>
-
-      <div class="pl-9">
-        <Button
-          icon="pi pi-plus"
-          aria-label="Save"
-          class="!w-full mt-7"
-          severity="secondary"
-          label="Answer"
-          @click="addNewAnswer(questionIndex)"
-        />
-      </div>
-    </div>
-
-    <Button
-      icon="pi pi-plus"
-      aria-label="Save"
-      class="!w-full mt-7"
-      severity="secondary"
-      label="Question"
-      @click="addNewQuestionHandler"
-    />
-
-    <div class="flex pt-6 justify-between">
-      <slot
-        name="actions"
-        :disable-next-button="!formIsValid || questions.length === 0"
-      ></slot>
-    </div>
-  </Form>
+    <template #actions="{ disableNextButton }">
+      <slot :disable-next-button />
+    </template>
+  </SharedQuizQuestionsForm>
 </template>
 
 <script lang="ts" setup>
 import { useQuizCreateStore } from "~/store/useQuizCreateStore";
+import SharedQuizQuestionsForm from "../Shared/SharedQuizQuestionsForm.vue";
 
 const {
   questions,
@@ -122,11 +25,4 @@ const {
   removeAnswer,
   markCorrectAnswer,
 } = useQuizCreateStore();
-
-const { errors, validate, formIsValid } = useQuizValidation(toRef(questions));
-
-const addNewQuestionHandler = () => {
-  addNewQuestion();
-  formIsValid.value = false;
-};
 </script>
