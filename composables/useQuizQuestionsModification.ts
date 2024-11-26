@@ -42,11 +42,16 @@ export const useQuizQuestionsModification = (
     });
   };
 
+  const resetQuestions = () => {
+    questions.value = [];
+  };
+
   return {
     addNewQuestion,
     removeQuestion,
     addNewAnswer,
     removeAnswer,
+    resetQuestions,
     markCorrectAnswer,
   };
 };

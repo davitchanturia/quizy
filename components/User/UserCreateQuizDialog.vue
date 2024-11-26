@@ -6,6 +6,7 @@
       modal
       :style="{ width: '50%' }"
       maximizable
+      @after-hide="quizCreateStore.resetQuiz"
     >
       <div class="w-full max-w-5xl mx-auto">
         <Stepper value="1" linear class="basis-[50rem]">

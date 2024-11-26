@@ -12,6 +12,13 @@ export const useQuizCreateStore = defineStore("quiz", () => {
 
   const quizDetails = ref<QuizDetails>(initialQuizDetails);
 
+  const resetQuizDetails = () => {
+    quizDetails.value.title = "";
+    quizDetails.value.description = "";
+    quizDetails.value.category = "";
+    quizDetails.value.difficulty = "";
+  };
+
   const quizDetailsAreValid = computed(() => {
     return (
       quizDetails.value.title.trim() !== "" &&
@@ -26,17 +33,19 @@ export const useQuizCreateStore = defineStore("quiz", () => {
   const initialQuestions: QuizQuestion[] = [];
   const questions = ref<QuizQuestion[]>(initialQuestions);
 
-  watch(questions, (newVal) => {
-    console.log("Questions:", newVal);
-  });
-
   const {
     addNewQuestion,
     removeQuestion,
     addNewAnswer,
     removeAnswer,
+    resetQuestions,
     markCorrectAnswer,
   } = useQuizQuestionsModification(questions);
+
+  const resetQuiz = () => {
+    resetQuizDetails();
+    resetQuestions();
+  };
 
   return {
     initialQuizDetails,
@@ -48,6 +57,7 @@ export const useQuizCreateStore = defineStore("quiz", () => {
     removeQuestion,
     addNewAnswer,
     removeAnswer,
+    resetQuiz,
     markCorrectAnswer,
   };
 });
