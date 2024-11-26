@@ -239,3 +239,32 @@ export const deleteQuizzes = async (quizIds: number[], all: boolean) => {
     throw error;
   }
 };
+
+export const updateQuizQuestions = async (
+  quizId: string,
+  questions: QuizQuestion[]
+) => {
+  const config = useRuntimeConfig();
+  const CSRF_TOKEN = useCookie("XSRF-TOKEN");
+
+  try {
+    const response = await $fetch<QuizQuestion[]>(
+      `${config.public.API_BASE_URL}/quizzes/${quizId}/questions`,
+      {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "X-XSRF-TOKEN": CSRF_TOKEN.value || "",
+        },
+        body: questions,
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Failed to update data:", error);
+    throw error;
+  }
+};

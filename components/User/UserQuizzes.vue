@@ -120,9 +120,16 @@
         </DataTable>
       </template>
     </Card>
+
     <UserEditQuizQuestionsDialog
       v-model="showEditQuestionsDialog"
       :questions="selectedQuestions"
+      @add-new-question="addNewQuestion"
+      @mark-correct-answer="markCorrectAnswer"
+      @remove-question="removeQuestion"
+      @add-new-answer="addNewAnswer"
+      @remove-answer="removeAnswer"
+      @update-questions="updateQuestions"
     />
   </div>
 </template>
@@ -133,30 +140,55 @@ import { deleteQuizzes, getQuizCategories, updateQuiz } from "~/services/quiz";
 import type { Quiz } from "~/utils/types/quiz";
 import { useUserStore } from "~/store/useUserStore";
 
-const quizzes = ref<Quiz[]>([]);
-
-const updateQuizzesHandler = async (newQuiz: Quiz) => {
-  quizzes.value.push(newQuiz);
-};
-
 const userStore = useUserStore();
 
-try {
-  const response = await getUserQuizzes(userStore.user?.id);
-  quizzes.value = response as Quiz[];
-} catch (error) {
-  console.log(error);
-}
+const userQuizzes = () => {
+  const quizzes = ref<Quiz[]>([]);
 
-const editingRows = ref([]);
-const selectedQuizzes = ref([]);
-const selectAll = ref(false);
+  const updateQuizzesHandler = async (newQuiz: Quiz) => {
+    quizzes.value.push(newQuiz);
+  };
 
-const deleteQuizzesHandler = async () => {
-  const ids = selectedQuizzes.value.map((quiz) => quiz?.id);
+  const fetchUserQuizzes = async () => {
+    try {
+      const response = await getUserQuizzes(userStore.user?.id);
+      quizzes.value = response as Quiz[];
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  await deleteQuizzes(ids, selectAll.value);
+  return {
+    quizzes,
+    fetchUserQuizzes,
+    updateQuizzesHandler,
+  };
 };
+
+const { quizzes, fetchUserQuizzes, updateQuizzesHandler } = userQuizzes();
+
+onBeforeMount(async () => {
+  await fetchUserQuizzes();
+});
+
+const useDeleteQuiz = () => {
+  const selectedQuizzes = ref([]);
+  const selectAll = ref(false);
+
+  const deleteQuizzesHandler = async () => {
+    const ids = selectedQuizzes.value.map((quiz) => quiz?.id);
+
+    await deleteQuizzes(ids, selectAll.value);
+  };
+
+  return {
+    selectedQuizzes,
+    selectAll,
+    deleteQuizzesHandler,
+  };
+};
+
+const { selectedQuizzes, selectAll, deleteQuizzesHandler } = useDeleteQuiz();
 
 const categoryOptions = ref();
 
@@ -168,11 +200,11 @@ const difficultyOptions = ref([
 
 categoryOptions.value = await getQuizCategories();
 
+const editingRows = ref([]);
+
 const onRowEditSave = async (event: any) => {
   const { newData, index } = event;
-
   quizzes.value[index] = newData;
-
   const { id, title, category, is_active, difficulty } = quizzes.value[index];
 
   const updatedQuiz = {
@@ -186,12 +218,15 @@ const onRowEditSave = async (event: any) => {
   await updateQuiz(updatedQuiz);
 };
 
-const showEditQuestionsDialog = ref(false);
-const selectedQuestions = ref([]);
-
-const openQuestionsDialog = (id: number) => {
-  selectedQuestions.value =
-    quizzes.value.find((quiz) => quiz.id === id)?.questions || [];
-  showEditQuestionsDialog.value = true;
-};
+const {
+  showEditQuestionsDialog,
+  selectedQuestions,
+  openQuestionsDialog,
+  addNewQuestion,
+  removeQuestion,
+  addNewAnswer,
+  removeAnswer,
+  markCorrectAnswer,
+  updateQuestions,
+} = useUpdateQuizQuestions(quizzes);
 </script>

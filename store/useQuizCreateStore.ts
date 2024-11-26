@@ -24,8 +24,11 @@ export const useQuizCreateStore = defineStore("quiz", () => {
 
   //questions
   const initialQuestions: QuizQuestion[] = [];
-
   const questions = ref<QuizQuestion[]>(initialQuestions);
+
+  watch(questions, (newVal) => {
+    console.log("Questions:", newVal);
+  });
 
   const {
     addNewQuestion,
