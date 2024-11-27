@@ -6,7 +6,7 @@ export const useQuizCreateStore = defineStore("quiz", () => {
   const initialQuizDetails: QuizDetails = {
     title: "",
     description: "",
-    category: "",
+    category: undefined,
     difficulty: "",
   };
 
@@ -23,8 +23,7 @@ export const useQuizCreateStore = defineStore("quiz", () => {
     return (
       quizDetails.value.title.trim() !== "" &&
       quizDetails.value.description.trim() !== "" &&
-      typeof quizDetails.value.category === "number" &&
-      quizDetails.value.category > 0 &&
+      quizDetails.value.category !== undefined &&
       ["easy", "medium", "hard"].includes(quizDetails.value.difficulty)
     );
   });

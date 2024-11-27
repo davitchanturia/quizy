@@ -91,7 +91,10 @@ const quizCreateStore = useQuizCreateStore();
 
 const createNewQuiz = async () => {
   const newQuiz = {
-    info: quizCreateStore.quizDetails,
+    info: {
+      ...quizCreateStore.quizDetails,
+      category: quizCreateStore.quizDetails.category?.id,
+    },
     questions: quizCreateStore.questions,
   };
 

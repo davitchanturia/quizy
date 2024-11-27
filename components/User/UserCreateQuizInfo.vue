@@ -56,7 +56,6 @@
             name="category"
             :options="categoryOptions"
             option-label="name"
-            option-value="id"
             placeholder="Select a Category"
             fluid
           />

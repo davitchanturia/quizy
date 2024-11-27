@@ -10,7 +10,10 @@
           {{ quizCreateStore.quizDetails.title }}
         </div>
         <span>&#8226;</span>
-        <Chip class="text-lg" :label="quizCreateStore.quizDetails.category" />
+        <Chip
+          class="text-lg"
+          :label="quizCreateStore.quizDetails.category?.name"
+        />
 
         <span>&#8226;</span>
         <Chip
