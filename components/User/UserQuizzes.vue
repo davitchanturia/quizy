@@ -2,7 +2,7 @@
   <div>
     <div v-if="quizzes.length === 0">You have not created quizzes yet</div>
 
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-3 mt-2">
       <UserCreateQuizDialog @quiz-created="updateQuizzesHandler" />
       <Button
         v-if="selectedQuizzes.length > 0"
@@ -131,6 +131,8 @@
       @remove-answer="removeAnswer"
       @update-questions="updateQuestions"
     />
+
+    <Toast />
   </div>
 </template>
 
@@ -175,10 +177,29 @@ const useDeleteQuiz = () => {
   const selectedQuizzes = ref([]);
   const selectAll = ref(false);
 
+  const toast = useToast();
+
   const deleteQuizzesHandler = async () => {
     const ids = selectedQuizzes.value.map((quiz) => quiz?.id);
 
-    await deleteQuizzes(ids, selectAll.value);
+    try {
+      await deleteQuizzes(ids, selectAll.value);
+      quizzes.value = quizzes.value.filter((quiz) => !ids.includes(quiz.id));
+      toast.add({
+        severity: "success",
+        summary: `${ids.length === 1 ? "Quiz" : "Quizzes"} deleted successfully `,
+        life: 3000,
+      });
+
+      selectedQuizzes.value = [];
+    } catch (error) {
+      console.log(error);
+      toast.add({
+        severity: "error",
+        summary: "Unable to delete quizzes, try again later",
+        life: 3000,
+      });
+    }
   };
 
   return {
