@@ -27,6 +27,19 @@ cd quizy
 npm install
 ```
 
+3. env
+
+```bash
+cp .env.example .env
+```
+
+by default backend urls are set to localhost:8000, if you are using different urls, change them in .env file
+
+```bash
+NUXT_API_BASE_URL=
+NUXT_BACKEND_BASE_URL=
+```
+
 ## Scripts
 
 - `npm run dev`: Start development server
@@ -61,4 +74,5 @@ npm install
 
 ## API Reference
 
-[here](https://github.com/davitchanturia/quizy-api) you can check api repository for quizy. Backend is written in Laravel.
+to set up quizy you need to set up api first.
+[here](https://github.com/davitchanturia/quizy-api) you can check api repository. Backend is written in Laravel.
