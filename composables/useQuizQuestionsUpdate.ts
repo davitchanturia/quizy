@@ -31,7 +31,6 @@ export const useUpdateQuizQuestions = (userQuizzes: Ref<Quiz[]>) => {
     } finally {
       selectedQuizId.value = undefined;
     }
-    console.log(questions);
   };
 
   return {

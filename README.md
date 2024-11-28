@@ -1,75 +1,64 @@
-# Nuxt Minimal Starter
+# Quizy 🎲
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Overview
 
-## Setup
+Quizy is a dynamic web application that empowers users to create, share, and participate in interactive quizzes. Whether you're an educator, team leader, or quiz enthusiast, Quizy provides a flexible platform for generating engaging quiz experiences.
 
-Make sure to install dependencies:
+## Prerequisites
+
+- Node.js (v18.0.0 or higher)
+- npm (v9.0.0 or higher)
+
+## Installation
+
+1. Clone the repository
 
 ```bash
-# npm
+git clone git@github.com:davitchanturia/quizy.git
+```
+
+```bash
+cd quizy
+```
+
+2. Install dependencies
+
+```bash
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+## Scripts
 
-Start the development server on `http://localhost:3000`:
+- `npm run dev`: Start development server
+- `npm run build`: Build production application
+- `npm run preview`: Preview production build
+- `npm run lint`: Run ESLint
+- `npm run lint:fix`: Automatically fix ESLint issues
 
-```bash
-# npm
-npm run dev
+## Packages & Technologies
 
-# pnpm
-pnpm dev
+### Stack
 
-# yarn
-yarn dev
+- Vue.js
+- Nuxt.js
+- Typescript
 
-# bun
-bun run dev
-```
+### libraries
 
-## Production
+- Tailwind CSS
+- PrimeVue
+- Pinia
 
-Build the application for production:
+### Validation & Utilities
 
-```bash
-# npm
-npm run build
+- Yup (Form Validation)
+- VueUse (Composition Utilities)
 
-# pnpm
-pnpm build
+### Development Tools
 
-# yarn
-yarn build
+- ESLint
+- Prettier
 
-# bun
-bun run build
-```
+## API Reference
 
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+[here](https://github.com/davitchanturia/quizy-api) you can check api repository for quizy. Backend is written in Laravel.
